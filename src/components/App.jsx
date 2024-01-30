@@ -1,22 +1,33 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Profile, Actors, MovieInformation, NavBar, Movies } from '.';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Movies />,
+  },
+  {
+    path: '/profile/:id',
+    element: <Profile />,
+  },
+  {
+    path: '/movies/:id',
+    element: <MovieInformation />,
+  },
+  {
+    path: '/actors/:id',
+    element: <Actors />,
+  },
+]);
 
 const App = () => (
   <div>
+    <CssBaseline />
+    <NavBar />
     <main>
-      <CssBaseline />
-      <Routes>
-        <Route path="/">
-          <h1>Home</h1>
-        </Route>
-        <Route path="/movies">
-          <h1>Movies</h1>
-        </Route>
-        <Route path="/movies/:id">
-          <h1>Movies</h1>
-        </Route>
-      </Routes>
+      <RouterProvider router={router} />
     </main>
   </div>
 );
