@@ -1,31 +1,14 @@
 import * as React from 'react';
 import { CssBaseline } from '@mui/material';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Profile, Actors, MovieInformation, NavBar, Movies } from '.';
+import { NavBar} from '.';
 
 import useStyles from './styles';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   const classes = useStyles();
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Movies />,
-    },
-    {
-      path: '/profile/:id',
-      element: <Profile />,
-    },
-    {
-      path: '/movies/:id',
-      element: <MovieInformation />,
-    },
-    {
-      path: '/actors/:id',
-      element: <Actors />,
-    },
-  ]);
+  
 
   return (
     <div className={classes.root}>
@@ -33,7 +16,8 @@ const App = () => {
       <NavBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <RouterProvider router={router} />
+         <Outlet />   
+         {/*to render other components as a child, based on route */}
       </main>
     </div>
   );
