@@ -1,6 +1,7 @@
 # dependencies
 /node_modules
 .env
+prevDependencies.txt
 
 # testing
 /coverage
