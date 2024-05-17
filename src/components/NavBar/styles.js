@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+const sidebarWidth = 240
 
 export default makeStyles((theme) => ({
   toolbar: {
@@ -17,4 +18,20 @@ export default makeStyles((theme) => ({
       display: 'none',
     },
   },
+  sidebar: {
+    [theme.breakpoints.up('sm')]: {
+      width: sidebarWidth,
+      flexShrink: 0,
+    },
+  },
+  sidebarPaper: {
+    width: sidebarWidth,
+  },
+  linkButton: {
+    '&:hover': {
+      color: 'white !important',
+      textDecoration:  'none'
+
+    }
+  }
 }));
