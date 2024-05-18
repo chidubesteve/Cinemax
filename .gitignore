@@ -1,12 +1,16 @@
-# dependencies
-/node_modules
+# client dependencies
+/client/node_modules
 .env
 prevDependencies.txt
 
 # testing
-/coverage
+client/coverage
 
 # production
-/build
+clent/build
+
+node_modules
+.env
+
 
 npm-debug.log*
