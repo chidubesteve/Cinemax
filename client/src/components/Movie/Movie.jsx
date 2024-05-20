@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grow, Typography, Grid, ToolTip, Rating } from '@mui/material';
+import { Grow, Typography, Grid, Tooltip, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import useStyles from './styles.js';
@@ -9,7 +9,52 @@ const Movie = ({ movie, i }) => {
   console.log(movie, i);
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.movie}>
-        <Typography variant='h5' className={classes.title}>{movie.title}</Typography>
+      <Grow in key={i} timeout={(i + 1) * 300}>
+        <Link className={classes.links} to={`movies/${movie.id}`}>
+          <img
+            alt={movie.title}
+            className={classes.image}
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                : 'https://www.fillmurray.com/200/300'
+            }
+          />
+        </Link>
+      </Grow>
+      <Typography variant="h6" className={classes.title}>
+        {movie.title}
+      </Typography>
+      <Tooltip
+        disableTouchListener
+        title={`${Number(Math.floor(movie.vote_average * 100) / 100).toFixed(
+          1
+        )} / 10`}
+        slotProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -12],
+                },
+              },
+            ],
+          },
+        }}
+        arrow
+        enterDelay={300}
+        leaveDelay={200}
+      >
+        <div>
+          <Rating
+            className={classes.rating}
+            readOnly
+            value={movie.vote_average / 2}
+            precision={0.1}
+          />
+        </div>
+      </Tooltip>
     </Grid>
   );
 };
