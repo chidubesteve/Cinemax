@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { setupListeners } from '@reduxjs/toolkit/query'
+import { setupListeners } from '@reduxjs/toolkit/query'
 import { tmdbApi } from '../services/TMDB';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     [tmdbApi.reducerPath]: tmdbApi.reducer,
   },
@@ -10,7 +10,8 @@ export default configureStore({
     getDefaultMiddleware().concat(tmdbApi.middleware),
 });
 
-// setupListeners(configureStore.dispatch)
+setupListeners(store.dispatch)
 
+export default store
 
 
