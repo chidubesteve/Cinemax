@@ -10,26 +10,30 @@ import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
 
 const Movies = () => {
-  const { data, error, isFetching } = useGetMoviesQuery();
+  const { data, error, isFetching, isLoading } = useGetMoviesQuery();
 
-  if (isFetching) {
-    <Box display="flex" justifyContent="center">
-      <CircularProgress size={'4rem'} />
-    </Box>;
+  if (isFetching || isLoading) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size={'4rem'} />
+      </Box>
+    );
   }
 
-  console.log(data)
-
-  if (!data.results.length) {
-    <Box display="flex" alignItems="center">
-      <Typography variant="h4">
-        No movies match that search
-        <br />
-        Please try something else.
-      </Typography>
-    </Box>;
-  }
   if (error) return 'An error occured!';
+  console.log(data);
+
+  if (!data || !data.results || !data.results.length) {
+    return (
+      <Box display="flex" alignItems="center">
+        <Typography variant="h4">
+          No movies match that search
+          <br />
+          Please try something else.
+        </Typography>
+      </Box>
+    );
+  }
   return (
     <div>
       <MovieList movies={data} />{' '}
