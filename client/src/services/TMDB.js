@@ -6,11 +6,15 @@ const page = 1;
 export const tmdbApi = createApi({
   reducerPath: 'tmdbApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api' }),
+  
   endpoints: (builder) => ({
     getMovies: builder.query({
       query: () => `movies?page=${page}`
     }),
+    getGenres: builder.query({
+      query: () => `genre/movie/list`
+    }),
   }),
 });
 
-export const { useGetMoviesQuery } = tmdbApi;
+export const { useGetMoviesQuery, useGetGenresQuery } = tmdbApi;
