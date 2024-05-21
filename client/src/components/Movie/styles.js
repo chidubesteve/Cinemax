@@ -32,13 +32,14 @@ export default makeStyles((theme) => ({
     width: '230px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
-    marginTop: '10px',
+    marginTop: '3px',
     marginBottom: 0,
     textAlign: 'center',
+    fontWeight: 'normal'
   },
   rating: {
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
-  },
+ },
 }));
