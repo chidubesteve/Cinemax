@@ -6,22 +6,44 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
+
+//internal imports
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
+import { MdErrorOutline } from 'react-icons/md';
 
 const Movies = () => {
   const { data, error, isFetching, isLoading } = useGetMoviesQuery();
 
   if (isFetching || isLoading) {
     return (
-      <Box display="flex" justifyContent="center">
-        <CircularProgress size={'4rem'} />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        width="100%"
+      >
+        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
       </Box>
     );
   }
 
-  if (error) return 'An error occured!';
-  console.log(data);
+  if (error)
+    return (
+      <Box
+        height="inherit"
+        display="flex"
+        flexDirection='column'
+        alignItems="center"
+        backgroundColor="red"
+        justifyContent="center"
+      >
+        <Typography color="gray">
+          An error occurred while getting movies <MdErrorOutline />
+        </Typography>
+      </Box>
+    );
 
   if (!data || !data.results || !data.results.length) {
     return (
@@ -34,11 +56,7 @@ const Movies = () => {
       </Box>
     );
   }
-  return (
-    <div>
-      <MovieList movies={data} />{' '}
-    </div>
-  );
+  return <MovieList movies={data} />;
 };
 
 export default Movies;
