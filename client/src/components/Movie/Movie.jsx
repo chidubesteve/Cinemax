@@ -7,7 +7,6 @@ import cinemax_logo from '../../assests/cinamax-logo.png'
 
 const Movie = ({ movie, i }) => {
   const classes = useStyles();
-  console.log(movie, i);
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.movie}>
       <Grow in key={i} timeout={(i + 1) * 300}>
@@ -18,7 +17,7 @@ const Movie = ({ movie, i }) => {
             src={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                : 'cinemax_logo'
+                : cinemax_logo
             }
           />
         </Link>
