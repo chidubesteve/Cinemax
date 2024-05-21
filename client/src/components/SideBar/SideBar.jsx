@@ -17,11 +17,12 @@ import { MdErrorOutline } from 'react-icons/md';
 
 // internal imports
 import useStyles from './styles';
-import logo from '../../assests/Cinemax.png';
+import logo from '../../assests/images/Cinemax.png';
 import { useGetGenresQuery } from '../../services/TMDB';
+import genreIcons from '../../assests/genres';
 
 const categories = [
-  { label: 'Trending', value: 'trending' },
+  { label: 'Popular', value: 'popular' },
   { label: 'Top Rated', value: 'top_rated' },
   { label: 'Upcoming', value: 'upcoming' },
   { label: 'Now Playing', value: 'now_playing' },
@@ -33,7 +34,7 @@ const SideBar = ({ setSideBarOpen }) => {
 
   const { data, isLoading, isFetching, error } = useGetGenresQuery();
   console.log(data);
-  
+
   return (
     <>
       <Link to={'/'} className={classes.logoLink}>
@@ -46,6 +47,14 @@ const SideBar = ({ setSideBarOpen }) => {
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => setSideBarOpen(false)}>
               <ListItemButton>
+                <ListItemIcon>
+                  <img
+                    src={genreIcons[label.toLowerCase()]}
+                    alt="categories icons"
+                    className={classes.genreImages}
+                    height={30}
+                  />
+                </ListItemIcon>
                 <ListItemText primary={label} />
               </ListItemButton>
             </ListItem>
@@ -84,6 +93,14 @@ const SideBar = ({ setSideBarOpen }) => {
             <Link key={id} className={classes.links} to="/">
               <ListItem onClick={() => setSideBarOpen(false)}>
                 <ListItemButton>
+                  <ListItemIcon>
+                    <img
+                      src={genreIcons[name.toLowerCase()]}
+                      alt="genre icons"
+                      className={classes.genreImages}
+                      height={30}
+                    />
+                  </ListItemIcon>
                   <ListItemText primary={name} />
                 </ListItemButton>
               </ListItem>

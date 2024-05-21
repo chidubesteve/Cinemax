@@ -3,7 +3,7 @@ import { Grow, Typography, Grid, Tooltip, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import useStyles from './styles.js';
-import cinemax_logo from '../../assests/cinamax-logo.png'
+import cinemax_logo from '../../assests/images/cinemax-logo.png'
 
 const Movie = ({ movie, i }) => {
   const classes = useStyles();
