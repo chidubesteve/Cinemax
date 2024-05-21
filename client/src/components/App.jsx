@@ -8,11 +8,9 @@ import { Outlet } from 'react-router-dom';
 const App = () => {
   const classes = useStyles();
 
-  
-
   return (
     <div className={classes.root}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme={true}/>
       <NavBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
