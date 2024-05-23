@@ -14,12 +14,14 @@ import {
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 import { MdErrorOutline } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 
 // internal imports
 import useStyles from './styles';
 import logo from '../../assests/images/Cinemax.png';
 import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assests/genres';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 const categories = [
   { label: 'Popular', value: 'popular' },
@@ -31,9 +33,12 @@ const categories = [
 const SideBar = ({ setSideBarOpen }) => {
   const theme = useTheme();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
 
   const { data, isLoading, isFetching, error } = useGetGenresQuery();
-  console.log(data);
 
   return (
     <>
@@ -45,7 +50,7 @@ const SideBar = ({ setSideBarOpen }) => {
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => setSideBarOpen(false)}>
+            <ListItem onClick={() => dispatch(selectGenreOrCategory(value))}>
               <ListItemButton>
                 <ListItemIcon>
                   <img
@@ -91,7 +96,7 @@ const SideBar = ({ setSideBarOpen }) => {
           <ListSubheader>Genres</ListSubheader>
           {data.genres.map(({ name, id }) => (
             <Link key={id} className={classes.links} to="/">
-              <ListItem onClick={() => setSideBarOpen(false)}>
+              <ListItem onClick={() => dispatch(selectGenreOrCategory(id))}>
                 <ListItemButton>
                   <ListItemIcon>
                     <img
