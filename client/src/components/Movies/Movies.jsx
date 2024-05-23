@@ -11,9 +11,17 @@ import { useSelector } from 'react-redux';
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
 import { MdErrorOutline } from 'react-icons/md';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 const Movies = () => {
-  const { data, error, isFetching, isLoading } = useGetMoviesQuery();
+  const [page, setPage] = useState(1);
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+
+  const { data, error, isFetching, isLoading } = useGetMoviesQuery({
+    genreIdOrCategoryName, page
+  });
 
   if (isFetching || isLoading) {
     return (
@@ -34,9 +42,8 @@ const Movies = () => {
       <Box
         height="inherit"
         display="flex"
-        flexDirection='column'
+        flexDirection="column"
         alignItems="center"
-        backgroundColor="red"
         justifyContent="center"
       >
         <Typography color="gray">
