@@ -19,7 +19,7 @@ import { useTheme } from '@mui/material/styles';
 
 // internal imports
 import useStyles from './styles'; // import useStyles
-import { SideBar } from '..';
+import { Search, SideBar } from '..';
 
 const NavBar = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -49,7 +49,7 @@ const NavBar = () => {
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && 'Search...'}
+          {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
               <Button color="inherit" onClick={() => {}}>
@@ -71,7 +71,7 @@ const NavBar = () => {
               </Button>
             )}
           </div>
-          {isMobile && 'Search...'}
+          {isMobile && <Search />}
         </Toolbar>
       </AppBar>
       <div>

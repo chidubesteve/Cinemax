@@ -92,10 +92,6 @@ app.get('/api/movie/:categoryName', async (req, res) => {
     })
     .catch((error) => {
       console.log('Error fetching category:', error.message, error.code);
-      console.log('categoryName is: ', categoryName);
-      console.log('url is: ', url);
-      console.log(req.query);
-      console.log(req.params);
       res.status(500).send({ message: 'Error fetching category' });
     });
 });
@@ -117,10 +113,30 @@ app.get('/api/genre/movie/list', async (req, res) => {
     });
 });
 
-// All other request not handled by api will return the react app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+//  proxy endpoint to get movies by search
+app.get('/api/search/movie', async (req, res) => {
+  const { query, page } = req.query;
+
+  const params = {
+    language: 'en-US',
+    page: page || 1,
+  };
+
+  tmdbApi
+    .get(`search/movie?query=${query}`, { params })
+    .then((result) => {
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error searching movies:', err);
+      res.status(500).send({ message: 'Error searching movies' });
+    });
 });
+
+// All other request not handled by api will return the react app
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

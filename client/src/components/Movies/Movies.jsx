@@ -15,12 +15,12 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 const Movies = () => {
   const [page, setPage] = useState(1);
-  const { genreIdOrCategoryName } = useSelector(
+  const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
 
   const { data, error, isFetching, isLoading } = useGetMoviesQuery({
-    genreIdOrCategoryName, page
+    genreIdOrCategoryName, page, searchQuery
   });
 
   if (isFetching || isLoading) {
@@ -48,6 +48,8 @@ const Movies = () => {
       >
         <Typography color="gray">
           An error occurred while getting movies <MdErrorOutline />
+          <br/>
+          {error.message}
         </Typography>
       </Box>
     );
