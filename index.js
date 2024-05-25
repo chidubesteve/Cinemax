@@ -43,7 +43,6 @@ const getMoviesHandler = async (req, res) => {
     page: req.query.page || 1,
   };
 
-  // Determine URL and additional params based on the path
   if (req.path === '/api/movies') {
     url = 'trending/movie/week';
   } else if (req.path === '/api/discover/movie') {
@@ -133,10 +132,73 @@ app.get('/api/search/movie', async (req, res) => {
     });
 });
 
+// proxy request for request token
+app.get('/api/requestToken', async (req, res) => {
+  try {
+    const response = await tmdbApi.get('/authentication/token/new');
+    const { request_token } = response.data;
+
+    if (response.data.success) {
+      res.status(200).json({ request_token });
+    } else {
+      res.status(500).json({ message: 'Token generation unsuccessful' });
+    }
+  } catch (err) {
+    console.log('Sorry, your token could not be generated.', err);
+    res.status(500).json({ message: 'Error generating token' });
+  }
+});
+
+//proxy request for session_id
+app.post('/api/sessionId', async (req, res) => {
+  const { request_token } = req.body;
+  console.log('req.body is: ', req.body);
+
+  try {
+    if (!request_token) {
+      return res.status(400).json({ message: 'Request token is required' });
+    }
+
+    const response = await tmdbApi.post('authentication/session/new', {
+      request_token,
+    });
+    // Assuming that the data returned from tmdbApi has an object with session_id
+    if (response.data && response.data.session_id) {
+      res.status(200).json(response.data);
+      console.log('this is response.data: ', response.data);
+    } else {
+      throw new Error('TMDB did not return a session_id');
+    }
+  } catch (err) {
+    console.error('Error fetching session ID:', err.message);
+    res.status(500).json({ message: 'Error fetching session ID' });
+  }
+});
+
+//proxy endpoint for account
+app.get('/api/getAccount', async (req, res) => {
+  const { sessionId } = req.query;
+  if (!sessionId) {
+    return res.status(400).send({ message: 'Session ID is required' });
+  }
+  const params = {
+    session_id: sessionId,
+  };
+  tmdbApi
+    .get(`account`, { params })
+    .then((result) => {
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error getting account: ', err);
+      res.status(500).send({ message: 'Error getting account' });
+    });
+});
+
 // All other request not handled by api will return the react app
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

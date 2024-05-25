@@ -45,6 +45,9 @@ const Search = () => {
           '& .Mui-error .MuiInputAdornment-root': {
             color: theme.palette.error.main,
           },
+          [theme.breakpoints.down('sm')]: {
+            size: 'small',
+          }
           // '& .MuiOutlinedInput-notchedOutline': {
           //   px: 5.5,
           // },
