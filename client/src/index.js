@@ -3,14 +3,18 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // internal imports
 // eslint-disable-next-line import/no-named-as-default
 import App from './components/App';
 import { Profile, Actors, MovieInformation, Movies } from './components';
-import store from './app/store'
+import store from './app/store';
 import RootErrorBoundary from './components/Errors/RootErrorBoundary';
 
 const Root = () => {
@@ -19,8 +23,7 @@ const Root = () => {
     () =>
       createTheme({ palette: { mode: prefersDarkMode ? 'dark' : 'light' } }),
     [prefersDarkMode]
-  );
-
+  );  
   const router = createBrowserRouter([
     {
       path: '/',
@@ -42,6 +45,10 @@ const Root = () => {
         {
           path: 'actors/:id',
           element: <Actors />,
+        },
+        {
+          path: 'approved',
+          element: <Navigate to="/" replace={true}/>,
         },
       ],
     },

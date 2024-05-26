@@ -8,7 +8,7 @@ export const fetchToken = async () => {
     const token = data.request_token;
 
     if (token) {
-      localStorage.setItem('request_token', token);
+      sessionStorage.setItem('request_token', token);
       window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${window.location.origin}/approved`;
     }
   } catch (error) {
@@ -17,7 +17,7 @@ export const fetchToken = async () => {
 };
 
 export const createSessionId = async () => {
-  const token = localStorage.getItem('request_token');
+  const token = sessionStorage.getItem('request_token');
   if (token) {
     try {
       const response = await fetch('/api/sessionId', {
@@ -33,7 +33,7 @@ export const createSessionId = async () => {
       }
       const data = await response.json();
       if (data.session_id) {
-        localStorage.setItem('session_id', data.session_id);
+        sessionStorage.setItem('session_id', data.session_id);
         return data.session_id;
       } else {
         throw new Error('No session id in the response');

@@ -30,17 +30,16 @@ const NavBar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem('request_token');
-  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+  const token = sessionStorage.getItem('request_token');
+  const sessionIdFromSessionStorage = sessionStorage.getItem('session_id');
 
-  console.log('this is the user: ', user);
-
+ 
   useEffect(() => {
     const logUserIn = async () => {
       let accountData;
       if (token) {
-        if (sessionIdFromLocalStorage) {
-          accountData = await getAccount(sessionIdFromLocalStorage);
+        if (sessionIdFromSessionStorage) {
+          accountData = await getAccount(sessionIdFromSessionStorage);
         } else {
           const sessionId = await createSessionId();
           accountData = await getAccount(sessionId);
@@ -52,7 +51,7 @@ const NavBar = () => {
       }
     };
     logUserIn();
-  }, [token, sessionIdFromLocalStorage, dispatch]);
+  }, [token, sessionIdFromSessionStorage, dispatch]);
 
   const classes = useStyles(); // call it as a hook
   const isMobile = useMediaQuery('(max-width:600px)');

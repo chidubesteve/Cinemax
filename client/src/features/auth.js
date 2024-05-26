@@ -13,10 +13,10 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true;
-      state.sessionId = localStorage.getItem('session_id');
+      state.sessionId = sessionStorage.getItem('session_id');
 
-      localStorage.setItem('accountId', action.payload?.id);
-      console.log(action.payload?.id)
+      sessionStorage.setItem('accountId', action.payload?.id);
+      console.log(action.payload?.id);
     },
   },
 });
