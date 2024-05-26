@@ -48,8 +48,6 @@ const Movies = () => {
       >
         <Typography color="gray">
           An error occurred while getting movies <MdErrorOutline />
-          <br/>
-          {error.message}
         </Typography>
       </Box>
     );

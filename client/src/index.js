@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import { Profile, Actors, MovieInformation, Movies } from './components';
 import store from './app/store'
+import RootErrorBoundary from './components/Errors/RootErrorBoundary';
 
 const Root = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -24,6 +25,7 @@ const Root = () => {
     {
       path: '/',
       element: <App />,
+      errorElement: <RootErrorBoundary />,
       children: [
         {
           path: '',
