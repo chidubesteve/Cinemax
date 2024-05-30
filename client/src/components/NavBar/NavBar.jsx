@@ -85,7 +85,6 @@ const NavBar = () => {
                 color="inherit"
                 onClick={() => {
                   fetchToken();
-                  console.log('clicked');
                 }}
               >
                 Login &nbsp; <AccountCircle />

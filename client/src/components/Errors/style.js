@@ -69,6 +69,7 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
     textDecoration: 'none',
     borderRadius: '3px',
+    marginTop: '1rem',
     color: 'white',
     letterSpacing: '1px',
     border: 'none',

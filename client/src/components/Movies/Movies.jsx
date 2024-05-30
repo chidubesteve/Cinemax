@@ -20,7 +20,9 @@ const Movies = () => {
   );
 
   const { data, error, isFetching, isLoading } = useGetMoviesQuery({
-    genreIdOrCategoryName, page, searchQuery
+    genreIdOrCategoryName,
+    page,
+    searchQuery,
   });
 
   if (isFetching || isLoading) {
@@ -54,8 +56,14 @@ const Movies = () => {
 
   if (!data || !data.results || !data.results.length) {
     return (
-      <Box display="flex" alignItems="center">
-        <Typography variant="h4">
+      <Box
+        height="inherit"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="h6" color="gray">
           No movies match that search
           <br />
           Please try something else.
