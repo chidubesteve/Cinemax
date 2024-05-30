@@ -2,6 +2,8 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import PageTitle from '../PageTitle';
+
 
 const Profile = () => {
   const { user } = useSelector((state) => state.user);
@@ -14,6 +16,8 @@ const Profile = () => {
   };
 
   return (
+    <>
+    <PageTitle title={"Profile | Cinemax"}/>
     <Box>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="h4" gutterBottom>
@@ -31,6 +35,7 @@ const Profile = () => {
         <Box>FAVORITE MOVIES</Box>
       )}
     </Box>
+    </>
   );
 };
 
