@@ -152,7 +152,6 @@ app.get('/api/requestToken', async (req, res) => {
 //proxy request for session_id
 app.post('/api/sessionId', async (req, res) => {
   const { request_token } = req.body;
-  console.log('req.body is: ', req.body);
 
   try {
     if (!request_token) {
@@ -165,7 +164,6 @@ app.post('/api/sessionId', async (req, res) => {
     // Assuming that the data returned from tmdbApi has an object with session_id
     if (response.data && response.data.session_id) {
       res.status(200).json(response.data);
-      console.log('this is response.data: ', response.data);
     } else {
       throw new Error('TMDB did not return a session_id');
     }
@@ -195,10 +193,31 @@ app.get('/api/getAccount', async (req, res) => {
     });
 });
 
-// All other request not handled by api will return the react app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+// proxy endpoint to get a particular movie information = configure route to prevent path conflict in express
+app.get('/api/movie/id/:id', async (req, res) => {
+  const { append_to_response } = req.query;
+  const { id } = req.params;
+
+  const params = {
+    language: 'en-US',
+  };
+  tmdbApi
+    .get(`movie/${id}?append_to_response=${append_to_response}`, { params })
+    .then((result) => {
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error getting movie detail: ', err);
+      res
+        .status(500)
+        .send({ message: 'Error getting movie detail', error: err.message });
+    });
 });
+
+// All other request not handled by api will return the react app
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
