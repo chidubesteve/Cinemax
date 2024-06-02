@@ -214,10 +214,37 @@ app.get('/api/movie/id/:id', async (req, res) => {
     });
 });
 
+//proxy endpoint to get move recommendations from a particular movie
+app.get('/api/movie/recommendation/:movie_id', async (req, res) => {
+  const { movie_id } = req.params;
+  const { page } = req.query;
+  console.log(movie_id);
+
+  const params = {
+    language: 'en-US',
+    page: page || 1,
+  };
+
+  tmdbApi
+    .get(`movie/${movie_id}/recommendations`, { params })
+    .then((result) => {
+
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error getting movie recommendations: ', err);
+      res
+        .status(500)
+        .send({
+          message: 'Error getting movie recommendations',
+          error: err.message,
+        });
+    });
+});
 // All other request not handled by api will return the react app
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

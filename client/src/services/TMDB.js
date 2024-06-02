@@ -41,8 +41,11 @@ export const tmdbApi = createApi({
     getMovie: builder.query({ // configure route {added /id} to avoiding path conflict in express
       query: (id) => `movie/id/${id}?append_to_response=videos,credits`,
     }),
+    getRecommendations: builder.query({ //refactoring route to prevent path conflict
+      query: ({movie_id, page}) => `movie/recommendation/${movie_id}?page=${page}`
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery } =
+export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery, useGetRecommendationsQuery } =
   tmdbApi;
