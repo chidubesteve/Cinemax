@@ -21,9 +21,22 @@ const Root = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = React.useMemo(
     () =>
-      createTheme({ palette: { mode: prefersDarkMode ? 'dark' : 'light' } }),
-    [prefersDarkMode]
-  );  
+      createTheme({ palette: { mode: prefersDarkMode ? 'dark' : 'light' },   breakpoints: {
+        values: {
+          xs: 0,
+          sm: 600,
+          md: 960,
+          lg: 1280,
+          xl: 1920,
+          customBreakpoint0: 320,
+          customBreakpoint1: 375,
+          customBreakpoint2: 425,
+          customBreakpoint3: 768,
+        },
+      },
+     }),
+    [prefersDarkMode] 
+  );
   const router = createBrowserRouter([
     {
       path: '/',
@@ -48,7 +61,7 @@ const Root = () => {
         },
         {
           path: 'approved',
-          element: <Navigate to="/" replace={true}/>,
+          element: <Navigate to="/" replace={true} />,
         },
       ],
     },
