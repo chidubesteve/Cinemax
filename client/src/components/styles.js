@@ -2,6 +2,12 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles(() => ({
   '@global': {
+    // firefox scrollbar
+    '*': {
+      'scrollbar-color': '#7B7B7B #424242',
+      'scrollbar-width': 'thin',
+    },
+
     '*::-webkit-scrollbar': {
       width: '0.5rem',
     },
@@ -15,7 +21,7 @@ export default makeStyles(() => ({
       width: '0.35rem',
     },
     '*::-webkit-scrollbar-thumb:hover': {
-      backgroundColor: '#E3E6d4',
+      backgroundColor: '#6F6F6F',
     },
   },
   root: {
