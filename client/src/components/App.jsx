@@ -4,11 +4,14 @@ import { NavBar} from '.';
 
 import useStyles from './styles';
 import { Outlet } from 'react-router-dom';
+import PageTitle from './PageTitle';
 
 const App = () => {
   const classes = useStyles();
 
   return (
+    <>
+    <PageTitle title={'Cinemax | AI-powered Movie App'} />
     <div className={classes.root}>
       <CssBaseline enableColorScheme={true}/>
       <NavBar />
@@ -18,6 +21,7 @@ const App = () => {
          {/*to render other components as a child, based on route */}
       </main>
     </div>
+    </>
   );
 };
 
