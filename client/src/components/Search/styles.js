@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     filter: theme.palette.mode === 'light' && 'invert(1)',
     [theme.breakpoints.down('sm')]: {
       marginBottom: '10px',
-      height: '20px',
+      height: '30px',
     },
   },
 
