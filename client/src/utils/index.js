@@ -55,7 +55,6 @@ export const getAccount = async (sessionId) => {
     }
 
     const accountData = await response.json();
-    console.log(accountData);
     return accountData;
   } catch (err) {
     console.error('Error fetching account details:', err);
