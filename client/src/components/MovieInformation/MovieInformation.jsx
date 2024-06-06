@@ -285,7 +285,11 @@ const MovieInformation = () => {
                   >
                     IMDB
                   </Button>
-                  <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
+                  <Button
+                    onClick={() => setOpen(true)}
+                    href="#"
+                    endIcon={<Theaters />}
+                  >
                     Trailer
                   </Button>
                 </ButtonGroup>
@@ -338,7 +342,14 @@ const MovieInformation = () => {
           </Grid>
         </Grid>
         <Box marginTop="5rem" width="100%">
-          <Typography variant="h4" gutterBottom align="center">
+          <Typography
+            variant="h4"
+            gutterBottom
+            align="center"
+            sx={(theme) => ({
+              [theme.breakpoints.down('sm')]: { fontSize: '1.8rem' },
+            })}
+          >
             You might also like
           </Typography>
 
