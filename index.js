@@ -218,7 +218,6 @@ app.get('/api/movie/id/:id', async (req, res) => {
 app.get('/api/movie/recommendation/:movie_id', async (req, res) => {
   const { movie_id } = req.params;
   const { page } = req.query;
-  console.log(movie_id);
 
   const params = {
     language: 'en-US',
@@ -228,19 +227,63 @@ app.get('/api/movie/recommendation/:movie_id', async (req, res) => {
   tmdbApi
     .get(`movie/${movie_id}/recommendations`, { params })
     .then((result) => {
-
       res.status(200).send(result.data);
     })
     .catch((err) => {
       console.log('Error getting movie recommendations: ', err);
-      res
-        .status(500)
-        .send({
-          message: 'Error getting movie recommendations',
-          error: err.message,
-        });
+      res.status(500).send({
+        message: 'Error getting movie recommendations',
+        error: err.message,
+      });
     });
 });
+
+//proxy endpoint to get an actors info
+app.get('/api/person/:id', async (req, res) => {
+  const { append_to_response } = req.query;
+  const { id } = req.params;
+
+  const params = {
+    language: 'en-US',
+  };
+
+  tmdbApi
+    .get(`person/${id}?append_to_response=${append_to_response}`, { params })
+    .then((result) => {
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error getting actors details: ', err);
+      res.status(500).send({
+        message: 'Error getting actors details',
+        error: err.message,
+      });
+    });
+});
+
+//proxy endpoint to get an movies an actor casted in
+app.get('/api/discover/with_cast/movie', async (req, res) => {
+  const { with_cast, page } = req.query;
+
+  const params = {
+    language: 'en-US',
+    page: page || 1,
+  };
+
+  tmdbApi
+    .get(`discover/movie?with_cast=${with_cast}`, { params })
+    .then((result) => {
+      res.status(200).send(result.data);
+    })
+    .catch((err) => {
+      console.log('Error getting movies actor is known for: ', err);
+      res.status(500).send({
+        message: 'Error getting movies actor is known for: ',
+        error: err.message,
+      });
+    });
+});
+
 // All other request not handled by api will return the react app
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));

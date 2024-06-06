@@ -44,8 +44,16 @@ export const tmdbApi = createApi({
     getRecommendations: builder.query({ //refactoring route to prevent path conflict
       query: ({movie_id, page}) => `movie/recommendation/${movie_id}?page=${page}`
     }),
+    // get actors info
+    getActors: builder.query({
+      query: (id) => `person/${id}?append_to_response=external_ids`
+    }),
+    // get movies an artist is known for
+    getMoviesByActorsID: builder.query({ //refactoring route to prevent path conflict
+      query: ({id, page}) => `discover/with_cast/movie?with_cast=${id}&page=${page}`
+    })
   }),
 });
 
-export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery, useGetRecommendationsQuery } =
+export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery, useGetRecommendationsQuery, useGetActorsQuery, useGetMoviesByActorsIDQuery } =
   tmdbApi;
