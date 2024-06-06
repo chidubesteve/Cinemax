@@ -7,12 +7,15 @@ import {
   Toolbar,
   Button,
   useMediaQuery,
+  Switch,
+  Box,
 } from '@mui/material';
 import {
   AccountCircle,
   Menu,
   Brightness4,
   Brightness7,
+  HelpOutline,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -33,7 +36,6 @@ const NavBar = () => {
   const token = sessionStorage.getItem('request_token');
   const sessionIdFromSessionStorage = sessionStorage.getItem('session_id');
 
- 
   useEffect(() => {
     const logUserIn = async () => {
       let accountData;
@@ -44,7 +46,6 @@ const NavBar = () => {
           const sessionId = await createSessionId();
           accountData = await getAccount(sessionId);
         }
-        console.log('this is the accountData, ', accountData);
         if (accountData) {
           dispatch(setUser(accountData));
         }
@@ -78,6 +79,9 @@ const NavBar = () => {
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
+          {/* <Box>
+          Include adult <HelpOutline fontSize='.2rem'/><Switch />
+          </Box> */}
           {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
@@ -100,7 +104,11 @@ const NavBar = () => {
                   <Avatar
                     style={{ width: 30, height: 30 }}
                     alt="Profile"
-                    src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.44546679.1715731200&semt=ais_user"
+                    src={
+                      user.avatar.tmdb.avatar_path
+                        ? `https://image.tmdb.org/t/p/w500/${user.avatar.tmdb.avatar_path}`
+                        : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.44546679.1715731200&semt=ais_user'
+                    }
                   />
                 </Link>
               </Button>
