@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 //internal imports
-import useStyles from './style';
+import useStyles  from './style';
+import { globalStyles } from './style';
+import PageTitle from '../PageTitle';
+
 const Error = ({ errCode, headerMessage, bodyMessage }) => {
   const classes = useStyles();
   return (
+    <>
+    <PageTitle title={`${errCode} | Cinemax`}/>
+    {globalStyles}
     <div className={classes.error_404_container}>
       <div className={classes.error_bg_img}></div>
       <h1 className={classes.text_404}>{errCode}</h1>
@@ -16,6 +22,7 @@ const Error = ({ errCode, headerMessage, bodyMessage }) => {
           Back To Homepage
         </Link>
     </div>
+    </>
   );
 };
 

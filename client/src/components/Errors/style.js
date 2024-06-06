@@ -1,14 +1,18 @@
 import { makeStyles } from '@mui/styles';
+import { GlobalStyles } from '@mui/material';
 import error_sign from '../../assests/images/error_sign.png'
+
 
 export default makeStyles((theme) => ({
   error_404_container: {
-    width: '100%',
-    height: '100%',
+    width: 'inherit',
+    height: '100dvh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
+    backgroundColor: theme.palette.mode === 'dark' && '#121212 !important',
+    color: theme.palette.mode === 'dark' ? 'white' : 'black',
     padding: '0',
     margin: 'none',
     boxSizing: 'border-box'
@@ -17,12 +21,13 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       height: '10rem',
     },
-    width: 'inherit',
+    width: '100%',
     height: '15rem',
     backgroundImage: `url(${error_sign})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
+
   },
   text_404: {
     [theme.breakpoints.down('sm')]: {
@@ -77,3 +82,15 @@ export default makeStyles((theme) => ({
     transition: 'all .3s ease-in',
   },
 }));
+
+export const globalStyles = (
+  <GlobalStyles
+    styles={{
+      '*': {
+        margin: 0,
+        padding: 0,
+        boxSizing: 'border-box',
+      },
+    }}
+  />
+);
