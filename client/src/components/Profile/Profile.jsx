@@ -17,7 +17,7 @@ const Profile = () => {
 
   return (
     <>
-    <PageTitle title={"Profile | Cinemax"}/>
+    <PageTitle title={`My Profile | Cinemax`}/>
     <Box>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="h4" gutterBottom>
