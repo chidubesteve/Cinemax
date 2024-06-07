@@ -12,14 +12,15 @@ const Search = () => {
   const [query, setQuery] = useState('');
   const [shrink, setShrink] = useState(false);
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const classes = useStyles();
 
   const handleKeyDown = (e) => {
-    if(e.key === 'Enter') {
-      dispatch(searchMovie(query))
+    if (e.key === 'Enter') {
+      dispatch(searchMovie(query));
     }
   };
+  if (location.pathname !== '/') return null;
   return (
     <div className={classes.searchContainer}>
       <TextField
@@ -30,13 +31,12 @@ const Search = () => {
         label="Search"
         onFocus={() => setShrink(true)}
         onBlur={(e) => setShrink(!!e.target.value)}
-
         InputLabelProps={{
           shrink,
           sx: {
             left: '2rem',
             fontSize: '0.85rem',
-          }
+          },
         }}
         sx={(theme) => ({
           '& .Mui-focused .MuiInputAdornment-root': {
@@ -47,7 +47,7 @@ const Search = () => {
           },
           [theme.breakpoints.down('sm')]: {
             size: 'small',
-          }
+          },
           // '& .MuiOutlinedInput-notchedOutline': {
           //   px: 5.5,
           // },

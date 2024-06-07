@@ -44,6 +44,7 @@ const MovieInformation = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
@@ -153,7 +154,16 @@ const MovieInformation = () => {
     <>
       <PageTitle title={`${data.title} | Cinemax`} />
       <Grid className={classes.containerSpaceAround} container>
-        <Grid item sm={12} lg={4}>
+        <Grid
+          item
+          sm={12}
+          lg={4}
+          style={{
+            display: 'flex',
+            // alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <img
             className={classes.poster}
             src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
@@ -266,8 +276,9 @@ const MovieInformation = () => {
               <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
                 <ButtonGroup
                   variant="outlined"
-                  size="small"
                   style={{ marginBottom: '10px' }}
+                  size={isMobile ? 'small' : 'medium'}
+                  orientation={isMedium ? 'vertical' : 'horizontal'}
                 >
                   <Button
                     target="_blank"
@@ -299,6 +310,8 @@ const MovieInformation = () => {
                   variant="outlined"
                   size={isMobile ? 'small' : 'medium'}
                   style={{ marginBottom: '10px' }}
+                  orientation={isMedium ? 'vertical' : 'horizontal'}
+
                 >
                   <Button
                     onClick={addToFavorites}

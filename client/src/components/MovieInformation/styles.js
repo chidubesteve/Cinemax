@@ -5,11 +5,10 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     margin: '10px 0 !important',
-    // overflowX: 'hidden !important',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       flexWrap: 'wrap',
-      overflowX: 'hidden !important',
+      // overflowX: 'hidden !important',
     },
   },
   poster: {
@@ -18,11 +17,14 @@ export default makeStyles((theme) => ({
       theme.palette.mode === 'dark'
         ? '0.5em 1em 1em rgb(36, 36, 40)'
         : '0.5em 1em 1em rgb(64, 64, 70)',
-    width: '80%',
+    width: '90%',
+    alignSelf: 'start',
     [theme.breakpoints.down('md')]: {
       margin: '0 auto',
+      marginBottom: '35px',
       width: '50%',
-      height: '350px',
+      display: 'flex',
+      height: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       margin: '0 auto',
@@ -30,6 +32,10 @@ export default makeStyles((theme) => ({
       height: '350px',
       marginBottom: '30px',
     },
+    // [theme.breakpoints.down('customBreakpoint4')]: {
+    //   alignSelf: 'center !important',
+    //   marginBottom: '30px !important',
+    // },
   },
   genresContainer: {
     margin: '10px 0 !important',
@@ -70,18 +76,26 @@ export default makeStyles((theme) => ({
     alignItems: 'baseline',
     flexWrap: 'nowrap !important',
     gap: '16px',
-    width: '40rem !important',
+    // width: '40rem !important',
     msOverflowStyle: 'none' /* Edge, Internet Explorer */,
     scrollbarWidth: 'none' /* Firefox */,
     // hides scrollbars while allowing to scroll
     '&::-webkit-scrollbar': {
       display: 'none', // Chrome, Safari, Opera
     },
+    [theme.breakpoints.down('xl')]: {
+      maxWidth: '40rem !important',
+    },
+
+    [theme.breakpoints.down('customBreakpoint4')]: {
+      maxWidth: '44rem !important',
+    },
+
     [theme.breakpoints.down('customBreakpoint3')]: {
-      maxWidth: '28.5rem !important',
+      maxWidth: '28.7rem !important',
     },
     [theme.breakpoints.down('customBreakpoint2')]: {
-      maxWidth: '21rem !important',
+      maxWidth: '22rem !important',
     },
     [theme.breakpoints.down('customBreakpoint1')]: {
       maxWidth: '16rem !important',
@@ -111,9 +125,10 @@ export default makeStyles((theme) => ({
   },
   buttonsContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    alignItems: 'center',
+    [theme.breakpoints.down('customBreakpoint4')]: {
       flexDirection: 'column !important',
     },
   },
