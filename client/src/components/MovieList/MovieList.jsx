@@ -6,7 +6,7 @@ import { Movie } from '..';
 const MovieList = ({ movies, noOfMovies }) => {
   const classes = useStyles();
   return (
-    <Grid container className={classes.moviesContainer}>
+    <Grid container spacing={2} className={classes.moviesContainer}>
       {movies.results.slice(0, noOfMovies).map((movie, i) => (
         <Movie key={i} movie={movie} i={i} />
       ))}
