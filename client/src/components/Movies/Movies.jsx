@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 //internal imports
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList } from '..';
+import { MovieList, Pagination } from '..';
 import { MdErrorOutline } from 'react-icons/md';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
@@ -18,12 +18,17 @@ const Movies = () => {
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
-
   const { data, error, isFetching, isLoading } = useGetMoviesQuery({
     genreIdOrCategoryName,
     page,
     searchQuery,
   });
+  const breakingDevices = useMediaQuery((theme) =>
+    theme.breakpoints.between('1790', '2037')
+  );
+  console.log(data);
+
+  const noOfMovies = breakingDevices ? 18 : 20;
 
   if (isFetching || isLoading) {
     return (
@@ -71,7 +76,16 @@ const Movies = () => {
       </Box>
     );
   }
-  return <MovieList movies={data} />;
+  return (
+    <>
+      <MovieList movies={data} noOfMovies={noOfMovies} />{' '}
+      <Pagination
+        currentPage={page}
+        setPage={setPage}
+        totalPages={data?.total_pages}
+      />
+    </>
+  );
 };
 
 export default Movies;

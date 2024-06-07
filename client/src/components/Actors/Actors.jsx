@@ -22,20 +22,19 @@ import {
 } from '../../services/TMDB';
 import useStyles from './styles.js';
 import PageTitle from '../PageTitle.jsx';
-import { MovieList, ReadMore } from '..';
+import { MovieList, Pagination, ReadMore } from '..';
 
 const Actors = () => {
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
-  const page = 1;
+  const [page, setPage] = useState(1);
 
   const {
     data: actorsMovies,
     error: actorsMoviesError,
     isFetching: actorsMoviesIsFetching,
-    isLoading:
-    actorsMoviesIsLoading,
+    isLoading: actorsMoviesIsLoading,
   } = useGetMoviesByActorsIDQuery({ id, page });
   const {
     data: actorsData,
@@ -113,7 +112,10 @@ const Actors = () => {
         justifyContent="center"
       >
         <Typography color="gray">
-          {`Sorry, an error occurred while getting movies ${actorsData?.name || "actor"} is known for`} <MdErrorOutline />
+          {`Sorry, an error occurred while getting movies ${
+            actorsData?.name || 'actor'
+          } is known for`}{' '}
+          <MdErrorOutline />
         </Typography>
       </Box>
     );
@@ -178,7 +180,7 @@ const Actors = () => {
       <PageTitle title={`${actorsData?.name} | Cinemax`} />
       <Grid className={classes.containerSpaceAround} container spacing={3}>
         <Grid item sm={12} lg={5} xl={4}>
-        {}
+          {}
           <img
             className={classes.poster}
             src={`https://image.tmdb.org/t/p/w500/${actorsData?.profile_path}`}
@@ -315,13 +317,15 @@ const Actors = () => {
           <Typography variant="h3" fontWeight="bolder" marginBottom={'15px'}>
             {actorsData?.name}
           </Typography>
-          <Grid item >
-            <Typography variant="h5" gutterBottom fontWeight="500" >
+          <Grid item>
+            <Typography variant="h5" gutterBottom fontWeight="500">
               Biography
             </Typography>
             <ReadMore>
               {actorsData?.biography ||
-                `Sorry, we don't have a biography for ${actorsData?.name || `this actor`}`}
+                `Sorry, we don't have a biography for ${
+                  actorsData?.name || `this actor`
+                }`}
             </ReadMore>
             <Grid item className={classes.buttonsContainer} marginTop="1.5rem">
               <Button
@@ -357,9 +361,15 @@ const Actors = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Box margin='2rem 0' className={classes.known_movies}>
-          <h2 style={{ textAlign: 'center', display:'block'}}>Know For</h2>
-          {actorsMovies && <MovieList movies={actorsMovies} noOfMovies={12}/>}
+        <Box margin="2rem 0" className={classes.known_movies}>
+          <h2 style={{ textAlign: 'center', display: 'block' }}>Know For</h2>
+          
+          {actorsMovies && <MovieList movies={actorsMovies} noOfMovies={12} />}
+          <Pagination
+            currentPage={page}
+            setPage={setPage}
+            totalPages={actorsMovies?.total_pages}
+          />
         </Box>
       </Grid>
     </>
