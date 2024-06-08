@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const apiUrl =
+export const apiUrl =
   process.env.NODE_ENV === 'production'
     ? window.location.origin
     : 'http://localhost:3001';
@@ -9,6 +9,11 @@ export const tmdbApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${apiUrl}/api` }),
 
   endpoints: (builder) => ({
+    getUserList: builder.query({
+      query: ({ listName, sessionId, page, accountId }) =>
+        `account/${accountId}/${listName}?session_id=${sessionId}&page=${page}`,
+    }),
+
     getMovies: builder.query({
       query: ({ genreIdOrCategoryName, page, searchQuery }) => {
         // get movies by search
@@ -38,22 +43,34 @@ export const tmdbApi = createApi({
       query: () => `genre/movie/list`,
     }),
     // get a particular movie info
-    getMovie: builder.query({ // configure route {added /id} to avoiding path conflict in express
+    getMovie: builder.query({
+      // configure route {added /id} to avoiding path conflict in express
       query: (id) => `movie/id/${id}?append_to_response=videos,credits`,
     }),
-    getRecommendations: builder.query({ //refactoring route to prevent path conflict
-      query: ({movie_id, page}) => `movie/recommendation/${movie_id}?page=${page}`
+    getRecommendations: builder.query({
+      //refactoring route to prevent path conflict
+      query: ({ movie_id, page }) =>
+        `movie/recommendation/${movie_id}?page=${page}`,
     }),
     // get actors info
     getActors: builder.query({
-      query: (id) => `person/${id}?append_to_response=external_ids`
+      query: (id) => `person/${id}?append_to_response=external_ids`,
     }),
     // get movies an artist is known for
-    getMoviesByActorsID: builder.query({ //refactoring route to prevent path conflict
-      query: ({id, page}) => `discover/with_cast/movie?with_cast=${id}&page=${page}`
-    })
+    getMoviesByActorsID: builder.query({
+      //refactoring route to prevent path conflict
+      query: ({ id, page }) =>
+        `discover/with_cast/movie?with_cast=${id}&page=${page}`,
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery, useGetRecommendationsQuery, useGetActorsQuery, useGetMoviesByActorsIDQuery } =
-  tmdbApi;
+export const {
+  useGetMoviesQuery,
+  useGetUserListQuery,
+  useGetGenresQuery,
+  useGetMovieQuery,
+  useGetRecommendationsQuery,
+  useGetActorsQuery,
+  useGetMoviesByActorsIDQuery,
+} = tmdbApi;
