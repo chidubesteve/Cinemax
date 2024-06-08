@@ -284,6 +284,104 @@ app.get('/api/discover/with_cast/movie', async (req, res) => {
     });
 });
 
+// proxy endpoint for user to favorite movie
+app.post('/api/user/addToFavorite/user_id=:user_id', async (req, res) => {
+  const { media_type, media_id, favorite } = req.body;
+  const { session_id } = req.query;
+  const { user_id } = req.params;
+
+  const params = {
+    media_type: media_type,
+    media_id: media_id,
+    favorite: favorite,
+  };
+
+  try {
+    if (!session_id || !user_id) {
+      return res
+        .status(400)
+        .send({ message: 'Session ID and User ID are required' });
+    }
+
+    await tmdbApi
+      .post(`account/${user_id}/favorite?session_id=${session_id}`, params)
+      .then((response) => {
+        res.status(200).send(response.data);
+      });
+  } catch (err) {
+    console.log('Error adding movie to favorites: ', err);
+    res.status(500).send({
+      message: 'Error adding movie to favorites',
+      error: err.message,
+    });
+  }
+});
+
+// proxy endpoint for user to watchlist movie
+app.post('/api/user/addToWatchList/user_id=:user_id', async (req, res) => {
+  const { media_type, media_id, watchlist } = req.body;
+  const { session_id } = req.query;
+  const { user_id } = req.params;
+
+  const params = {
+    media_type: media_type,
+    media_id: media_id,
+    watchlist: watchlist,
+  };
+
+  if (!session_id || !user_id) {
+    return res
+      .status(400)
+      .send({ message: 'Session ID and User ID are required' });
+  }
+  await tmdbApi
+    .post(`account/${user_id}/watchlist?session_id=${session_id}`, params)
+    .then((response) => {
+      res.status(200).send(response.data);
+    })
+    .catch((err) => {
+      console.log('Error adding movie to favorites: ', err);
+      res.status(500).send({
+        message: 'Error adding movie to favorites',
+        error: err.message,
+      });
+    });
+});
+
+// proxy endpoint for user to get list of favorite/watchlist movies
+app.get('/api/account/:accountId/:listName/:listName2', async (req, res) => {
+  const { accountId, listName, listName2 } = req.params;
+  const { session_id, page } = req.query;
+
+  console.log(req.query);
+  console.log(req.params);
+
+  const params = {
+    session_id: session_id,
+    language: 'en-US',
+    page: page || 1,
+  };
+
+  if (!session_id || !accountId) {
+    return res
+      .status(400)
+      .send({ message: 'Session ID and User ID are required' });
+  }
+
+  await tmdbApi
+    .get(`account/${accountId}/${listName}/${listName2}`, { params })
+    .then((response) => {
+      res.status(200).send(response.data);
+    })
+    .catch((err) => {
+      console.log('Error adding movie to favorites: ', err);
+      res.status(500).send({
+        message: 'Error adding movie to favorites',
+        error: err.message,
+      });
+    });
+});
+
 // All other request not handled by api will return the react app
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
