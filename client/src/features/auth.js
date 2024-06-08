@@ -15,7 +15,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.sessionId = sessionStorage.getItem('session_id');
 
-      sessionStorage.setItem('accountId', action.payload?.id);
+      localStorage.setItem('accountId', action.payload?.id);
     },
   },
 });
