@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: theme.palette.mode === 'dark' && '#121212 !important',
-    color: theme.palette.mode === 'dark' ? 'white' : 'black',
+    color: theme.palette.text.primary,
     padding: '0',
     margin: 'none',
     boxSizing: 'border-box'
