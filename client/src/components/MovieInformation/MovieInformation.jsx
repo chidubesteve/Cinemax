@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -21,7 +21,7 @@ import {
   ArrowBack,
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdErrorOutline } from 'react-icons/md';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -30,25 +30,41 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import {
   useGetMovieQuery,
   useGetRecommendationsQuery,
+  useGetUserListQuery,
 } from '../../services/TMDB';
 import useStyles from './styles.js';
 import PageTitle from '../PageTitle.jsx';
 import genreIcons from '../../assests/genres';
 import { MovieList } from '..';
+import { apiUrl } from '../../services/TMDB';
 
 const MovieInformation = () => {
   const [open, setOpen] = React.useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isXLarge = useMediaQuery(theme.breakpoints.up('xl'));
   const isMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
+  const { user } = useSelector((state) => state.user);
   const { data, error, isFetching, isLoading } = useGetMovieQuery(id);
+  const { data: favoriteMovies } = useGetUserListQuery({
+    listName: 'favorite/movies',
+    accountId: user?.id,
+    sessionId: sessionStorage.getItem('session_id'),
+    page: 1,
+  });
+  const { data: watchlistMovies } = useGetUserListQuery({
+    listName: 'watchlist/movies',
+    accountId: user?.id,
+    sessionId: sessionStorage.getItem('session_id'),
+    page: 1,
+  });
   const {
     data: recommendations,
     error: isRecommendationsError,
@@ -56,11 +72,84 @@ const MovieInformation = () => {
     isLoading: isRecommendationsLoading,
   } = useGetRecommendationsQuery({ movie_id: id, page: 1 });
 
-  const isMovieFavorited = false;
-  const isMovieWatchListed = false;
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchListed, setIsMovieWatchListed] = useState(false);
 
-  const addToFavorites = () => {};
-  const addToWatchList = () => {};
+  useEffect(() => {
+    setIsMovieFavorited(
+      !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [favoriteMovies, data]);
+
+  useEffect(() => {
+    setIsMovieWatchListed(
+      !!watchlistMovies?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [watchlistMovies, data]);
+
+  const addToFavorites = async () => {
+    const sessionId = sessionStorage.getItem('session_id');
+    const userId = localStorage.getItem('accountId');
+    if (!sessionId || !userId) {
+      console.error('Session ID or User ID is missing, try logging in first');
+      return;
+    }
+
+    await fetch(
+      `${apiUrl}/api/user/addToFavorite/user_id=${userId}?session_id=${sessionId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          media_type: 'movie',
+          media_id: id,
+          favorite: !isMovieFavorited,
+        }),
+      }
+    ).then((data) => {
+      if (!data.ok) {
+        alert(`operation failed`);
+      }
+    });
+    setIsMovieFavorited((prev) => !prev);
+  };
+  const addToWatchList = async () => {
+    const sessionId = sessionStorage.getItem('session_id');
+    const userId = localStorage.getItem('accountId');
+    console.log('this is the sessionId', sessionId);
+    console.log('this is the userId', userId);
+
+    if (!sessionId || !userId) {
+      console.error('Session ID or User ID is missing, try logging in first');
+      return;
+    }
+
+    await fetch(
+      `${apiUrl}/api/user/addToWatchList/user_id=${userId}?session_id=${sessionId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          media_type: 'movie',
+          media_id: id,
+          watchlist: !isMovieWatchListed,
+        }),
+      }
+    )
+      .then((data) => {
+        if (!data.ok) {
+          alert(`operation failed`);
+        }
+      })
+      .catch((err) => {
+        console.error('Error adding movie to watchlist', err);
+      });
+    setIsMovieWatchListed((prev) => !prev);
+  };
 
   if (isFetching || isLoading) {
     return (
@@ -160,7 +249,6 @@ const MovieInformation = () => {
           lg={4}
           style={{
             display: 'flex',
-            // alignItems: 'center',
             justifyContent: 'center',
           }}
         >
@@ -277,7 +365,7 @@ const MovieInformation = () => {
                 <ButtonGroup
                   variant="outlined"
                   style={{ marginBottom: '10px' }}
-                  size={isMobile ? 'small' : 'medium'}
+                  size={isXLarge ? 'large' : 'small'}
                   orientation={isMedium ? 'vertical' : 'horizontal'}
                 >
                   <Button
@@ -308,10 +396,9 @@ const MovieInformation = () => {
               <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
                 <ButtonGroup
                   variant="outlined"
-                  size={isMobile ? 'small' : 'medium'}
+                  size={isXLarge ? 'large' : 'small'}
                   style={{ marginBottom: '10px' }}
                   orientation={isMedium ? 'vertical' : 'horizontal'}
-
                 >
                   <Button
                     onClick={addToFavorites}
@@ -334,7 +421,11 @@ const MovieInformation = () => {
                     endIcon={<ArrowBack />}
                   >
                     <Link
-                      to="/"
+                      to=""
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(-1);
+                      }}
                       style={{
                         textDecoration: 'none',
                         color: 'inherit',
