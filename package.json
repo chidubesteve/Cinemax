@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build": "npm install; cd client && npm install && npm run build"
+    "build": "npm install; cd client && npm install --legacy-peer-deps && npm run build"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
