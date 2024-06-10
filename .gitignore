@@ -7,7 +7,7 @@ prevDependencies.txt
 client/coverage
 
 # production
-clent/build
+client/.env.development
 
 node_modules
 .env
