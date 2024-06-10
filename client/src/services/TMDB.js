@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiUrl =
   process.env.NODE_ENV === 'production'
-    ? window.location.origin
+    ? 'https://cinemax-rosy.vercel.app'
     : 'http://localhost:3001';
-
+console.log(process.env.NODE_ENV)
 export const tmdbApi = createApi({
   reducerPath: 'tmdbApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${apiUrl}/api` }),
