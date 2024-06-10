@@ -22,9 +22,13 @@ app.use(limiter);
 app.use(cors());
 
 // Configure CORS
-app.use(cors({
-  origin: 'https://cinemax-app-seven.vercel.app'
-}));
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://cinemax-app-seven.vercel.app'
+    : '*', // Allow all origins in development
+  methods: 'GET, POST, OPTIONS',
+  allowedHeaders: 'Content-Type',
+};
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
