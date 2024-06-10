@@ -29,6 +29,10 @@
     "eslint-plugin-react": "^7.31.7",
     "eslint-plugin-react-hooks": "^4.5.0"
   },
+  "engines": {
+    "node": "20.10.0",
+    "npm": "10.5.2"
+  },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.2.0",
     "react-dom": "^17.0.0 || ^18.2.0"

@@ -21,16 +21,16 @@ app.use(express.json());
 app.use(limiter);
 
 // Configure CORS
-const corsOptions = cors({
-  origin: process.env.NODE_ENV === 'production'
-  ? 'https://cinemax-app-seven.vercel.app'
-  : '*', // Allow all origins in development
-  methods: '*',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  });
+// const corsOptions = cors({
+//   origin: process.env.NODE_ENV === 'production'
+//   ? 'https://cinemax-app-seven.vercel.app'
+//   : '*', // Allow all origins in development
+//   methods: '*',
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+//   });
 
-app.use(corsOptions);
+app.use(cors());
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
