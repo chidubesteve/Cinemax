@@ -27,7 +27,7 @@ app.use(cors({
 }));
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, './client/build')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // creating a axios default instance
 const tmdbApi = axios.create({
@@ -389,7 +389,7 @@ app.get('/api/account/:accountId/:listName/:listName2', async (req, res) => {
 
 // All other request not handled by api will return the react app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.listen(PORT, () => {
