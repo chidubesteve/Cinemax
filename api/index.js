@@ -19,16 +19,18 @@ const limiter = rateLimit({
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(limiter);
-app.use(cors());
 
 // Configure CORS
-const corsOptions = {
+const corsOptions = cors({
   origin: process.env.NODE_ENV === 'production'
-    ? 'https://cinemax-app-seven.vercel.app'
-    : '*', // Allow all origins in development
-  methods: 'GET, POST, OPTIONS',
-  allowedHeaders: 'Content-Type',
-};
+  ? 'https://cinemax-app-seven.vercel.app'
+  : '*', // Allow all origins in development
+  methods: '*',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  });
+
+app.use(corsOptions);
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
