@@ -40,7 +40,13 @@ const Search = () => {
         }}
         sx={(theme) => ({
           '& .Mui-focused .MuiInputAdornment-root': {
-            color: theme.palette.primary.main,
+            color: theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.87)' : theme.palette.primary.main,
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.87)' :  theme.palette.primary.main,
+          },
+          "& label.Mui-focused": {
+            color: theme.palette.mode === 'light' && 'rgba(0, 0, 0, 0.87)',
           },
           '& .Mui-error .MuiInputAdornment-root': {
             color: theme.palette.error.main,
@@ -48,9 +54,9 @@ const Search = () => {
           [theme.breakpoints.down('sm')]: {
             size: 'small',
           },
-          // '& .MuiOutlinedInput-notchedOutline': {
-          //   px: 5.5,
-          // },
+          '& .MuiOutlinedInput-notchedOutline': {
+            px: 5.5,
+          },
         })}
         InputProps={{
           className: classes.input,
