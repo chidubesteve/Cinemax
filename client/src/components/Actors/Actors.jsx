@@ -174,7 +174,6 @@ const Actors = () => {
     );
   }
 
-  console.log(actorsData);
   return (
     <>
       <PageTitle title={`${actorsData?.name} | Cinemax`} />
@@ -343,7 +342,11 @@ const Actors = () => {
                 endIcon={<ArrowBack />}
               >
                 <Link
-                  to="/"
+                  to=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(-1);
+                  }}
                   style={{
                     textDecoration: 'none',
                     color: 'inherit',
@@ -363,7 +366,7 @@ const Actors = () => {
         </Grid>
         <Box margin="2rem 0" className={classes.known_movies}>
           <h2 style={{ textAlign: 'center', display: 'block' }}>Know For</h2>
-          
+
           {actorsMovies && <MovieList movies={actorsMovies} noOfMovies={12} />}
           <Pagination
             currentPage={page}

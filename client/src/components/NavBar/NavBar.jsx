@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   AppBar,
   Avatar,
@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles'; // import useStyles
 import { Search, SideBar } from '..';
 import { fetchToken, createSessionId, getAccount } from '../../utils';
+
+import { ThemeContext } from '../../utils/ToggleColorMode';
 import { useEffect } from 'react';
 import { setUser } from '../../features/auth';
 
@@ -32,6 +34,7 @@ const NavBar = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const colorMode = useContext(ThemeContext);
 
   const token = sessionStorage.getItem('request_token');
   const sessionIdFromSessionStorage = sessionStorage.getItem('session_id');
@@ -60,7 +63,7 @@ const NavBar = () => {
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color='default'>
         <Toolbar className={classes.toolbar}>
           {isMobile && (
             <IconButton
@@ -76,7 +79,7 @@ const NavBar = () => {
               <Menu />{' '}
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {colorMode.toggleColorMode()}}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {/* <Box>
