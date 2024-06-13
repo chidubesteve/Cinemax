@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/styles';
 import { MdErrorOutline } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -31,7 +30,6 @@ const categories = [
 ];
 
 const SideBar = ({ setSideBarOpen }) => {
-  const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { genreIdOrCategoryName } = useSelector(
@@ -42,7 +40,7 @@ const SideBar = ({ setSideBarOpen }) => {
 
   return (
     <>
-      <Link to={'/'} className={classes.logoLink}>
+      <Link to={'/'} className={classes.logoLink} onClick={() => window.location.reload()}>
         <img className={classes.logo} src={logo} alt="cinemax" />
       </Link>
       <Divider />
