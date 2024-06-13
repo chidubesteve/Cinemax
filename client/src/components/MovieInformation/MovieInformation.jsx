@@ -89,7 +89,7 @@ const MovieInformation = () => {
 
   const addToFavorites = async () => {
     const sessionId = sessionStorage.getItem('session_id');
-    const userId = localStorage.getItem('accountId');
+    const userId = sessionStorage.getItem('accountId');
     if (!sessionId || !userId) {
       console.error('Session ID or User ID is missing, try logging in first');
       return;
@@ -117,9 +117,7 @@ const MovieInformation = () => {
   };
   const addToWatchList = async () => {
     const sessionId = sessionStorage.getItem('session_id');
-    const userId = localStorage.getItem('accountId');
-    console.log('this is the sessionId', sessionId);
-    console.log('this is the userId', userId);
+    const userId = sessionStorage.getItem('accountId');
 
     if (!sessionId || !userId) {
       console.error('Session ID or User ID is missing, try logging in first');
