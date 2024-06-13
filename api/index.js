@@ -19,17 +19,6 @@ const limiter = rateLimit({
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(limiter);
-
-// Configure CORS
-// const corsOptions = cors({
-//   origin: process.env.NODE_ENV === 'production'
-//   ? 'https://cinemax-app-seven.vercel.app'
-//   : '*', // Allow all origins in development
-//   methods: '*',
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   credentials: true,
-//   });
-
 app.use(cors());
 
 // Have Node serve the files for our built React app
@@ -87,6 +76,7 @@ app.get(['/api/movies', '/api/discover/movie'], getMoviesHandler);
 app.get('/api/movie/:categoryName', async (req, res) => {
   const { categoryName } = req.params;
   const { page } = req.query;
+  console.log(categoryName)
 
   let params = {
     language: 'en-US',
