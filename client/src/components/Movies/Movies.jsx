@@ -26,7 +26,6 @@ const Movies = () => {
   const breakingDevices = useMediaQuery((theme) =>
     theme.breakpoints.between('1790', '2037')
   );
-  console.log(data);
 
   const noOfMovies = breakingDevices ? 18 : 20;
 
