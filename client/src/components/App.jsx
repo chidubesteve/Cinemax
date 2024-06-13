@@ -1,13 +1,17 @@
 import * as React from 'react';
+import { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
 import { NavBar} from '.';
 
 import useStyles from './styles';
 import { Outlet } from 'react-router-dom';
 import PageTitle from './PageTitle';
+import useAlan from './Alan';
 
 const App = () => {
   const classes = useStyles();
+  const alanBtnContainer = useRef();
+  useAlan();
 
   return (
     <>
@@ -20,6 +24,7 @@ const App = () => {
          <Outlet />   
          {/*to render other components as a child, based on route */}
       </main>
+      <div ref={alanBtnContainer}/>
     </div>
     </>
   );
