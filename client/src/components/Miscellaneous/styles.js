@@ -18,6 +18,7 @@ export default makeStyles((theme) => ({
     width: '3rem',
     outline: 'none',
     border: 'none',
+    transition: 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out',
     '&:hover': {
       cursor: 'pointer',
       transform: 'scale(1.1)',

@@ -22,9 +22,10 @@ import { setAdultContent } from '../../features/adultContentSlice';
 const Miscellaneous = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const reduxChecked = useSelector((state) => state.adultContent.adultContent);
+  const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(reduxChecked);
+  const [isScrolling, setIsScrolling] = useState(false)
 
   const toggleMiscellaneous = (state) => {
     setOpen(state);
@@ -33,6 +34,23 @@ const Miscellaneous = () => {
   useEffect(() => {
     setChecked(reduxChecked);
   }, [reduxChecked]);
+
+  useEffect(() => {
+    let timer;
+    const handleScroll = () => {
+      setIsScrolling(true);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setIsScrolling(false);
+      }, 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+    window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
     
     const handleChange = (event) => {
     const newValue = event.target.checked;
@@ -114,6 +132,10 @@ const Miscellaneous = () => {
         className={classes.miscellaneousBtn}
         aria-label="miscellaneous settings"
         onClick={() => toggleMiscellaneous(true)}
+        style={{
+          transform: isScrolling ? 'scale(0.5)' : 'scale(1)',
+          opacity: isScrolling ? 0.5 : 1,
+        }}
       >
         <MdMiscellaneousServices className={classes.icon} />
       </button>
