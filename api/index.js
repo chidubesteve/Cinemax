@@ -47,14 +47,17 @@ const getMoviesHandler = async (req, res) => {
     url = 'trending/movie/week';
   } else if (req.path === '/api/discover/movie') {
     url = 'discover/movie';
-    const { with_genres } = req.query;
-    console.log(with_genres);
+    const { with_genres, includeAdult } = req.query;
+
     console.log(url);
     params = {
       language: 'en-US',
       page: req.query.page || 1,
       with_genres: with_genres,
     };
+    if (includeAdult === 'true') {
+      params.include_adult = true;
+    }
   }
 
   // Make the API request to tmdbApi
@@ -76,12 +79,17 @@ app.get(['/api/movies', '/api/discover/movie'], getMoviesHandler);
 app.get('/api/movie/:categoryName', async (req, res) => {
   const { categoryName } = req.params;
   const { page } = req.query;
-  console.log(categoryName)
+  const includeAdult = req.query.include_adult;
+  console.log(req.query);
+  console.log(categoryName);
 
   let params = {
     language: 'en-US',
     page: page || 1,
   };
+  if (includeAdult === 'true') {
+    params.include_adult = true;
+  }
   const url = `movie/${categoryName}`;
   tmdbApi
     .get(url, {
@@ -115,13 +123,15 @@ app.get('/api/genre/movie/list', async (req, res) => {
 
 //  proxy endpoint to get movies by search
 app.get('/api/search/movie', async (req, res) => {
-  const { query, page } = req.query;
+  const { query, page, includeAdult } = req.query;
 
   const params = {
     language: 'en-US',
     page: page || 1,
   };
-
+  if (includeAdult === 'true') {
+    params.include_adult = true;
+  }
   tmdbApi
     .get(`search/movie?query=${query}`, { params })
     .then((result) => {
@@ -264,12 +274,15 @@ app.get('/api/person/:id', async (req, res) => {
 
 //proxy endpoint to get an movies an actor casted in
 app.get('/api/discover/with_cast/movie', async (req, res) => {
-  const { with_cast, page } = req.query;
+  const { with_cast, page, includeAdult } = req.query;
 
   const params = {
     language: 'en-US',
     page: page || 1,
   };
+  if (includeAdult === 'true') {
+    params.include_adult = true;
+  }
 
   tmdbApi
     .get(`discover/movie?with_cast=${with_cast}`, { params })
