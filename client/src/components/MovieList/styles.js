@@ -8,6 +8,7 @@ export default makeStyles((theme) => ({
         overflow: 'hidden',
         [theme.breakpoints.down('sm')]:  {
             justifyContent: 'center',
+            marginTop: '1em !important',
         }
     }
 }));
