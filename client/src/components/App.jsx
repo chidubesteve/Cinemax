@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
-import { NavBar} from '.';
+import { Miscellaneous, NavBar} from '.';
 
 import useStyles from './styles';
 import { Outlet } from 'react-router-dom';
@@ -24,6 +24,7 @@ const App = () => {
          <Outlet />   
          {/*to render other components as a child, based on route */}
       </main>
+      <Miscellaneous />
       <div ref={alanBtnContainer}/>
     </div>
     </>
