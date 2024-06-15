@@ -38,8 +38,9 @@ export default makeStyles((theme) => ({
   },
   Link: {
     textDecoration: 'none',
-    color: 'white',
+    color:  theme.palette.mode === 'dark' ? 'white !important' : 'rgba(0, 0, 0, 0.87) !important',
     display: 'flex',
     alignItems: 'center',
   },
+
 }));

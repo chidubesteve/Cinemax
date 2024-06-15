@@ -15,6 +15,9 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 const Movies = () => {
   const [page, setPage] = useState(1);
+  // fetch the switch state from the redux store
+  const includeAdult = useSelector(state => state.adultContent.adultContent)
+  console.log(includeAdult)
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
@@ -22,7 +25,9 @@ const Movies = () => {
     genreIdOrCategoryName,
     page,
     searchQuery,
+    includeAdult
   });
+  console.log(data); 
   const breakingDevices = useMediaQuery((theme) =>
     theme.breakpoints.between('1790', '2037')
   );

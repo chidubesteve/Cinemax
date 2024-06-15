@@ -23,11 +23,13 @@ import {
 import useStyles from './styles.js';
 import PageTitle from '../PageTitle.jsx';
 import { MovieList, Pagination, ReadMore } from '..';
+import { useSelector } from 'react-redux';
 
 const Actors = () => {
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
+  const includeAdult = useSelector((state) => state.adultContent.adultContent);
   const [page, setPage] = useState(1);
 
   const {
@@ -35,7 +37,9 @@ const Actors = () => {
     error: actorsMoviesError,
     isFetching: actorsMoviesIsFetching,
     isLoading: actorsMoviesIsLoading,
-  } = useGetMoviesByActorsIDQuery({ id, page });
+  } = useGetMoviesByActorsIDQuery({ id, page, includeAdult });
+  console.log(actorsMovies); 
+
   const {
     data: actorsData,
     error: actorsError,
@@ -121,7 +125,7 @@ const Actors = () => {
     );
   }
 
-  if (!actorsMovies?.results || !actorsMovies?.results.length > 0) {
+  if (!actorsMovies?.results) {
     return (
       <Box
         height="inherit"
