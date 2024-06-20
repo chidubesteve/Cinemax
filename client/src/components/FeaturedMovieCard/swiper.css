@@ -1,0 +1,50 @@
+:root {
+  --swiper-navigation-color: white;
+  --swiper-pagination-color: white;
+}
+.FeaturedCardContainer {
+  margin-bottom: 1.3rem;
+  height: 450px;
+  width: 100%;
+}
+.swiperContainer {
+  width: inherit;
+  height: inherit;
+}
+.FeaturedCardContainer .swiperSlide {
+  width: 75%;
+  height: 100%;
+  border-radius: 1rem;
+  position: relative;
+}
+.link {
+  text-decoration: none;
+  color: white ;
+}
+
+.image {
+  width: 75%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+.info {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+
+  width: 70%;
+}
+
+.overview {
+  font-size: .9rem;
+  color: rgba(255, 255, 255, 0.7) !important;
+  margin-top: .5rem;
+  text-wrap: wrap;
+}
+.mySwiper-navigation {
+  bottom: 7.7rem !important;
+}
+.myPrev-button-style {
+  left: 16rem !important;
+}

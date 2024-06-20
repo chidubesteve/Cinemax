@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-const sidebarWidth = 240;
+export const sidebarWidth = 240;
 
 export default makeStyles((theme) => ({
   toolbar: {

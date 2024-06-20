@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import { alpha } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
-const sidebarWidth = 240;
+import { sidebarWidth } from '../NavBar/styles';
 
 export default makeStyles((theme) => ({
   miscellaneousBtn: {
@@ -18,7 +18,6 @@ export default makeStyles((theme) => ({
     width: '3rem',
     outline: 'none',
     border: 'none',
-    transition: 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out',
     '&:hover': {
       cursor: 'pointer',
       transform: 'scale(1.1)',

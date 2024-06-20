@@ -188,6 +188,7 @@ const Actors = () => {
             className={classes.poster}
             src={`https://image.tmdb.org/t/p/w500/${actorsData?.profile_path}`}
             alt={actorsData?.name}
+            loading='lazy'
           />
           <Grid item className={classes.social_icons} gutterBottom>
             {socialMediaLinks.map(({ id, Icon, urlPrefix, title }) => {

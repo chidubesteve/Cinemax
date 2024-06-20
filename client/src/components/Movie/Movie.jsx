@@ -19,6 +19,7 @@ const Movie = ({ movie, i }) => {
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
                 : cinemax_logo
             }
+            loading='lazy'
           />
         </Link>
       </Grow>

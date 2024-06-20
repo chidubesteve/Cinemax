@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { sidebarWidth } from './NavBar/styles';
 
 export default makeStyles((theme) => ({
   '@global': {
@@ -11,7 +12,7 @@ export default makeStyles((theme) => ({
     },
     '*::-webkit-scrollbar-thumb': {
       backgroundColor: theme.palette.mode === 'light' ? ' #CECFCF' : '#7B7B7B',
-      borderRadius: '1.5rem', 
+      borderRadius: '1.5rem',
       width: '0.35rem',
     },
     '*::-webkit-scrollbar-thumb:hover': {
@@ -28,7 +29,7 @@ export default makeStyles((theme) => ({
   content: {
     flexGrow: '1',
     padding: '2em',
-    width: '100%',
+    width: `calc(100% - ${sidebarWidth}px)`,
     height: '100dvh',
   },
 }));

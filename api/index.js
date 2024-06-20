@@ -36,6 +36,9 @@ const tmdbApi = axios.create({
 // movies request handler
 const getMoviesHandler = async (req, res) => {
   let url = '';
+  const include_adult = req.query.include_adult
+  console.log(req.query);
+  console.log(include_adult);
 
   // Define base params
   let params = {
@@ -43,11 +46,15 @@ const getMoviesHandler = async (req, res) => {
     page: req.query.page || 1,
   };
 
+  
   if (req.path === '/api/movies') {
-    url = 'trending/movie/week';
+    url = 'discover/movie';
+    if(include_adult === 'true') {
+      params.include_adult = true
+    }
   } else if (req.path === '/api/discover/movie') {
     url = 'discover/movie';
-    const { with_genres, includeAdult } = req.query;
+    const { with_genres, include_adult } = req.query;
 
     console.log(url);
     params = {
@@ -55,9 +62,11 @@ const getMoviesHandler = async (req, res) => {
       page: req.query.page || 1,
       with_genres: with_genres,
     };
-    if (includeAdult === 'true') {
+    if (include_adult === 'true') {
       params.include_adult = true;
     }
+  } else if(req.path === '/api/trending/movie/day') {
+    url = 'trending/movie/day';
   }
 
   // Make the API request to tmdbApi
@@ -73,13 +82,13 @@ const getMoviesHandler = async (req, res) => {
 };
 
 // Proxy endpoint to get trending weekly movies & genres
-app.get(['/api/movies', '/api/discover/movie'], getMoviesHandler);
+app.get(['/api/movies', '/api/discover/movie', '/api/trending/movie/day'], getMoviesHandler);
 
 //get movies by category
 app.get('/api/movie/:categoryName', async (req, res) => {
   const { categoryName } = req.params;
   const { page } = req.query;
-  const includeAdult = req.query.include_adult;
+  const include_adult = req.query.include_adult;
   console.log(req.query);
   console.log(categoryName);
 
@@ -87,7 +96,7 @@ app.get('/api/movie/:categoryName', async (req, res) => {
     language: 'en-US',
     page: page || 1,
   };
-  if (includeAdult === 'true') {
+  if (include_adult === 'true') {
     params.include_adult = true;
   }
   const url = `movie/${categoryName}`;
@@ -123,13 +132,13 @@ app.get('/api/genre/movie/list', async (req, res) => {
 
 //  proxy endpoint to get movies by search
 app.get('/api/search/movie', async (req, res) => {
-  const { query, page, includeAdult } = req.query;
+  const { query, page, include_adult } = req.query;
 
   const params = {
     language: 'en-US',
     page: page || 1,
   };
-  if (includeAdult === 'true') {
+  if (include_adult === 'true') {
     params.include_adult = true;
   }
   tmdbApi
@@ -274,13 +283,13 @@ app.get('/api/person/:id', async (req, res) => {
 
 //proxy endpoint to get an movies an actor casted in
 app.get('/api/discover/with_cast/movie', async (req, res) => {
-  const { with_cast, page, includeAdult } = req.query;
+  const { with_cast, page, include_adult } = req.query;
 
   const params = {
     language: 'en-US',
     page: page || 1,
   };
-  if (includeAdult === 'true') {
+  if (include_adult === 'true') {
     params.include_adult = true;
   }
 

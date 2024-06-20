@@ -10,7 +10,10 @@ export const tmdbApi = createApi({
       query: ({ listName, sessionId, page, accountId }) =>
         `account/${accountId}/${listName}?session_id=${sessionId}&page=${page}`,
     }),
-
+    // get movies for featured cards, trending movies of the day
+    getDailyTrending: builder.query({
+      query: () => `trending/movie/day`,
+    }),
     getMovies: builder.query({
       query: ({ genreIdOrCategoryName, page, searchQuery, includeAdult }) => {
         const includeAdultParam = includeAdult ? '&include_adult=true' : '';
@@ -34,8 +37,8 @@ export const tmdbApi = createApi({
           return `discover/movie?with_genres=${genreIdOrCategoryName}&page=${page}${includeAdultParam}`;
         }
 
-        // get trending weekly movies
-        return `movies?page=${page}`;
+        // discover movies
+        return `movies?page=${page}${includeAdultParam}`;
       },
     }),
     getGenres: builder.query({

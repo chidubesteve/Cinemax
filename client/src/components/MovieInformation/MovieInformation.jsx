@@ -254,6 +254,7 @@ const MovieInformation = () => {
             className={classes.poster}
             src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
             alt={data?.title}
+            loading='lazy'
           />
         </Grid>
         <Grid item container lg={7} direction="column">
@@ -339,6 +340,7 @@ const MovieInformation = () => {
                             src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
                             className={classes.castImage}
                             alt={character.name}
+                            loading='lazy'
                           />
                           <Typography color="textPrimary" textAlign="center">
                             {character.name}

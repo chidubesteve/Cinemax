@@ -11,3 +11,4 @@ export { default as ReadMore } from './ReadMore/ReadMore';
 export { default as Pagination } from './Pagination/Pagination';
 export { default as RatedCards } from './Ratedcards/RatedCards';
 export { default as Miscellaneous } from './Miscellaneous/Miscellaneous';
+export { default as FeaturedMovie } from './FeaturedMovieCard/FeaturedMovie';

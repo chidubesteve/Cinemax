@@ -15,6 +15,7 @@ import {
   Tooltip,
   createTheme,
 } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 import useStyles from './styles';
 import { setAdultContent } from '../../features/adultContentSlice';
@@ -22,10 +23,13 @@ import { setAdultContent } from '../../features/adultContentSlice';
 const Miscellaneous = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation()
   const reduxChecked = useSelector((state) => state.adultContent.adultContent);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(reduxChecked);
   const [isScrolling, setIsScrolling] = useState(false)
+
+  const isHomePage = location.pathname === '/'
 
   const toggleMiscellaneous = (state) => {
     setOpen(state);
@@ -36,6 +40,8 @@ const Miscellaneous = () => {
   }, [reduxChecked]);
 
   useEffect(() => {
+    if (!isHomePage) return;
+
     let timer;
     const handleScroll = () => {
       setIsScrolling(true);
@@ -50,7 +56,7 @@ const Miscellaneous = () => {
     window.removeEventListener('scroll', handleScroll);
       clearTimeout(timer);
     };
-  }, []);
+  }, [isHomePage]);
     
     const handleChange = (event) => {
     const newValue = event.target.checked;
@@ -126,16 +132,20 @@ const Miscellaneous = () => {
     },
   });
 
+
+  const buttonStyles = isHomePage ? {
+    transform: isScrolling ? 'scale(0.5)' : 'scale(1)',
+    opacity: isScrolling ? 0.5 : 1,
+    transition: 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out',
+  } : {}
+
   return (
     <div>
       <button
         className={classes.miscellaneousBtn}
         aria-label="miscellaneous settings"
         onClick={() => toggleMiscellaneous(true)}
-        style={{
-          transform: isScrolling ? 'scale(0.5)' : 'scale(1)',
-          opacity: isScrolling ? 0.5 : 1,
-        }}
+        style={buttonStyles}
       >
         <MdMiscellaneousServices className={classes.icon} />
       </button>

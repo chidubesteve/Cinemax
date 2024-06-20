@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 //internal imports
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList, Pagination } from '..';
+import { FeaturedMovie, MovieList, Pagination } from '..';
 import { MdErrorOutline } from 'react-icons/md';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
@@ -81,6 +81,7 @@ const Movies = () => {
   }
   return (
     <>
+    <FeaturedMovie movies={data?.results.slice(0, 6)} />
       <MovieList movies={data} noOfMovies={noOfMovies} />{' '}
       <Pagination
         currentPage={page}
