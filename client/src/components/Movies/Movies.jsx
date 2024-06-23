@@ -36,7 +36,6 @@ const Movies = () => {
     isLoading: dailyTrendingIsLoading,
     error: dailyTrendingError,
   } = useGetDailyTrendingQuery();
-  console.log(data);
   const breakingDevices = useMediaQuery((theme) =>
     theme.breakpoints.between('2288', '2788')
   );
@@ -97,7 +96,7 @@ const Movies = () => {
       </Box>
     );
   }
-  //  i want to pass only movies that are not already in the in the movielist.that is check each movie id in dailyTrending and if it is the same (that is already being displayed in the movielist) then don't add it.
+
   const movieListIds = new Set(data?.results.map((movie) => movie.id));
 
   const filteredDailyTrending = dailyTrending?.results.filter(

@@ -5,7 +5,6 @@ import { Movie } from '..';
 
 const MovieList = ({ movies, noOfMovies }) => {
   const classes = useStyles();
-  // const startFrom = excludeFirstSix ? 6 : 0;
 
   return (
     <Grid container spacing={2} className={classes.moviesContainer}>

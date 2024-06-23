@@ -254,7 +254,7 @@ const MovieInformation = () => {
             className={classes.poster}
             src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
             alt={data?.title}
-            loading='lazy'
+            loading="lazy"
           />
         </Grid>
         <Grid item container lg={7} direction="column">
@@ -340,7 +340,7 @@ const MovieInformation = () => {
                             src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
                             className={classes.castImage}
                             alt={character.name}
-                            loading='lazy'
+                            loading="lazy"
                           />
                           <Typography color="textPrimary" textAlign="center">
                             {character.name}
@@ -460,17 +460,9 @@ const MovieInformation = () => {
           {recommendations ? (
             <MovieList movies={recommendations} noOfMovies={12} />
           ) : (
-            <Box
-              height="inherit"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="h6" color="gray">
-                Sorry, no recommendations available. <MdErrorOutline />
-              </Typography>
-            </Box>
+            <Typography variant="h6" color="gray" align="center">
+              Sorry, no recommendations available. <MdErrorOutline />
+            </Typography>
           )}
         </Box>
         <Modal
