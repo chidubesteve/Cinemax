@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
 import { GlobalStyles } from '@mui/material';
+
 export const GlobalCSS = () => (
   <GlobalStyles
     styles={{
@@ -14,4 +15,10 @@ export const GlobalCSS = () => (
 
 export default makeStyles((theme) => ({
 
+  title: {
+    [theme.breakpoints.down('customBreakpoint3')]: {
+      textOverflow: 'ellipsis !important',
+      fontSize: '19px',
+    },
+  },
 }));

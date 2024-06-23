@@ -49,15 +49,8 @@ const FeaturedMovie = ({ movies }) => {
           pagination: {
             el: '.swiper-pagination',
             clickable: true,
-          },
-        }
-      : {};
-
-    const addAutoPlay = !isSmallDevice
-      ? {
-          autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
+            dynamicBullets: true,
+            dynamicMainBullets: 3,
           },
         }
       : {};
@@ -66,16 +59,17 @@ const FeaturedMovie = ({ movies }) => {
       // Initialize Swiper
       new window.Swiper('.mySwiper', {
         slidesPerView: 'auto',
+        loopAdditionalSlides: 1,
         grabCursor: !0,
         centeredSlides: !isSmallDevice,
         effect: effect,
         ...effectConfig,
         ...addNavigationAndPagination,
         loop: !isSmallDevice,
-          autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-          },
+        autoplay: {
+          delay: 5e3,
+          disableOnInteraction: false,
+        },
       });
     };
 
@@ -89,34 +83,47 @@ const FeaturedMovie = ({ movies }) => {
   return (
     <>
       <GlobalCSS />
-      <Box className="FeaturedCardContainer">
+      <Box
+        className={`FeaturedCardContainer`}
+        title="Today's Trending Movies"
+      >
         <div className={`swiper mySwiper swiperContainer`}>
           <div className="swiper-wrapper">
             {movies.map((movie, i) => (
               <div key={i} className={`swiper-slide swiperSlide`}>
                 <Link to={`/movies/${movie.id}`} className="link">
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                    alt={movie?.title}
-                    title={movie?.title}
-                    className="image"
-                  />
-                  <div className="info">
-                    <h2 className="title">{movie?.title}</h2>
-                    <p className="overview">{movie?.overview}</p>
+                  <div className="cardMedia">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                      alt={movie?.title}
+                      title={movie?.title}
+                      className="image"
+                    />
+                    <div className="overlay"></div>
+
+                    <div className="info">
+                      <h2 className={classes.title}>{movie?.title}</h2>
+                      {!isSmallDevice && (
+                        <p className="overview">{movie?.overview}</p>
+                      )}
+                    </div>
                   </div>
                 </Link>
               </div>
             ))}
           </div>
+          {!isSmallDevice && (
+            <>
+              <div
+                className={`swiper-button-prev ${classes.myPrev_button_style}`}
+              ></div>
+              <div className={`swiper-button-next`}></div>
+              <div
+                className={`swiper-pagination ${classes.mySwiper_navigation}`}
+              ></div>
+            </>
+          )}
         </div>
-        {!isSmallDevice && (
-          <>
-            <div class="swiper-button-prev myPrev-button-style"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination mySwiper-navigation"></div>
-          </>
-        )}
       </Box>
     </>
   );
