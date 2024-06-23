@@ -159,7 +159,7 @@ const Miscellaneous = () => {
               Include adult &nbsp;
               <Tooltip
                 arrow
-                disableTouchListener
+                enterTouchDelay={0}
                 title={
                   'Enabling this option will include movies and shows marked as adult in your searches and throughout the app. Please ensure you are over 18 years old to use this feature.'
                 }
