@@ -71,6 +71,7 @@ export const tmdbApi = createApi({
 
 export const {
   useGetMoviesQuery,
+  useGetDailyTrendingQuery,
   useGetUserListQuery,
   useGetGenresQuery,
   useGetMovieQuery,
