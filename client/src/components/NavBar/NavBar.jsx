@@ -109,7 +109,7 @@ const NavBar = () => {
                     alt="Profile"
                     src={
                       user.avatar.tmdb.avatar_path
-                        ? `https://image.tmdb.org/t/p/w500/${user.avatar.tmdb.avatar_path}`
+                        ? `https://www.themoviedb.org/t/p/w64_and_h64_face/${user?.avatar?.tmdb?.avatar_path}`
                         : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.44546679.1715731200&semt=ais_user'
                     }
                   />
