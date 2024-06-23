@@ -38,9 +38,17 @@ const SideBar = ({ setSideBarOpen }) => {
 
   const { data, isLoading, isFetching, error } = useGetGenresQuery();
 
+  useEffect(() => {
+    setSideBarOpen(false);
+  }, [genreIdOrCategoryName, setSideBarOpen]);
+
   return (
     <>
-      <Link to={'/'} className={classes.logoLink} onClick={() => window.location.reload()}>
+      <Link
+        to={'/'}
+        className={classes.logoLink}
+        onClick={() => window.location.reload()}
+      >
         <img className={classes.logo} src={logo} alt="cinemax" />
       </Link>
       <Divider />

@@ -23,13 +23,13 @@ import { setAdultContent } from '../../features/adultContentSlice';
 const Miscellaneous = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation()
+  const location = useLocation();
   const reduxChecked = useSelector((state) => state.adultContent.adultContent);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(reduxChecked);
-  const [isScrolling, setIsScrolling] = useState(false)
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  const isHomePage = location.pathname === '/'
+  const isHomePage = location.pathname === '/';
 
   const toggleMiscellaneous = (state) => {
     setOpen(state);
@@ -53,15 +53,16 @@ const Miscellaneous = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => {
-    window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
       clearTimeout(timer);
     };
   }, [isHomePage]);
-    
-    const handleChange = (event) => {
+
+  const handleChange = (event) => {
     const newValue = event.target.checked;
     setChecked(newValue);
     dispatch(setAdultContent(newValue));
+    setOpen(false);
   };
 
   const socialMediaLinks = [
@@ -132,12 +133,13 @@ const Miscellaneous = () => {
     },
   });
 
-
-  const buttonStyles = isHomePage ? {
-    transform: isScrolling ? 'scale(0.5)' : 'scale(1)',
-    opacity: isScrolling ? 0.5 : 1,
-    transition: 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out',
-  } : {}
+  const buttonStyles = isHomePage
+    ? {
+        transform: isScrolling ? 'scale(0.5)' : 'scale(1)',
+        opacity: isScrolling ? 0.5 : 1,
+        transition: 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out',
+      }
+    : {};
 
   return (
     <div>
@@ -222,7 +224,10 @@ const Miscellaneous = () => {
                 >
                   <Icon
                     key={id}
-                    onClick={() => window.open(`${url}`, '_blank')}
+                    onClick={() => {
+                      window.open(`${url}`, '_blank');
+                      setOpen(false);
+                    }}
                     style={{ cursor: 'pointer' }}
                   />
                 </div>
