@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
       flexWrap: 'wrap',
       marginLeft: '0',
       height: '100px',
-    },
+   },
   },
   MenuButton: {
     marginRight: theme.spacing(2),
@@ -38,9 +38,11 @@ export default makeStyles((theme) => ({
   },
   Link: {
     textDecoration: 'none',
-    color:  theme.palette.mode === 'dark' ? 'white !important' : 'rgba(0, 0, 0, 0.87) !important',
+    color:
+      theme.palette.mode === 'dark'
+        ? 'white !important'
+        : 'rgba(0, 0, 0, 0.87) !important',
     display: 'flex',
     alignItems: 'center',
   },
-
 }));

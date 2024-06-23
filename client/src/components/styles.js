@@ -22,6 +22,7 @@ export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     height: '100%',
+    justifyContent: 'center',
   },
   toolbar: {
     height: '70px',
@@ -31,5 +32,8 @@ export default makeStyles((theme) => ({
     padding: '2em',
     width: `calc(100% - ${sidebarWidth}px)`,
     height: '100dvh',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
 }));
