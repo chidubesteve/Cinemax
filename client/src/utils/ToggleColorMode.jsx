@@ -1,10 +1,19 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState, useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
 const ToggleColorMode = ({ children }) => {
-  const [mode, setMode] = useState('dark');
+  // Initialize theme state
+  const [mode, setMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? JSON.parse(savedTheme) : 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(mode));
+  }, [mode]);
+
   const theme = useMemo(
     () =>
       createTheme({
@@ -32,8 +41,9 @@ const ToggleColorMode = ({ children }) => {
   const toggleColorMode = () => {
     setMode((prevMode) => (prevMode === 'dark' ? 'light' : 'dark'));
   };
+
   return (
-    <ThemeContext.Provider value={{ mode, setMode, toggleColorMode }}>
+    <ThemeContext.Provider value={{ mode, toggleColorMode }}>
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   );
