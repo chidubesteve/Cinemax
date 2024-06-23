@@ -85,7 +85,6 @@ const FeaturedMovie = ({ movies }) => {
       <GlobalCSS />
       <Box
         className={`FeaturedCardContainer`}
-        title="Today's Trending Movies"
       >
         <div className={`swiper mySwiper swiperContainer`}>
           <div className="swiper-wrapper">
