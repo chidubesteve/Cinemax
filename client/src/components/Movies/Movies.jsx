@@ -8,7 +8,10 @@ import {
 import { useSelector } from 'react-redux';
 
 //internal imports
-import { useGetMoviesQuery } from '../../services/TMDB';
+import {
+  useGetMoviesQuery,
+  useGetDailyTrendingQuery,
+} from '../../services/TMDB';
 import { FeaturedMovie, MovieList, Pagination } from '..';
 import { MdErrorOutline } from 'react-icons/md';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -16,7 +19,7 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 const Movies = () => {
   const [page, setPage] = useState(1);
   // fetch the switch state from the redux store
-  const includeAdult = useSelector(state => state.adultContent.adultContent)
+  const includeAdult = useSelector((state) => state.adultContent.adultContent);
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
@@ -24,16 +27,28 @@ const Movies = () => {
     genreIdOrCategoryName,
     page,
     searchQuery,
-    includeAdult
+    includeAdult,
   });
-  console.log(data); 
+
+  const {
+    data: dailyTrending,
+    isFetching: dailyTrendingIsFetching,
+    isLoading: dailyTrendingIsLoading,
+    error: dailyTrendingError,
+  } = useGetDailyTrendingQuery();
+  console.log(data);
   const breakingDevices = useMediaQuery((theme) =>
-    theme.breakpoints.between('1790', '2037')
+    theme.breakpoints.between('2288', '2788')
   );
 
   const noOfMovies = breakingDevices ? 18 : 20;
 
-  if (isFetching || isLoading) {
+  if (
+    isFetching ||
+    isLoading ||
+    dailyTrendingIsFetching ||
+    dailyTrendingIsLoading
+  ) {
     return (
       <Box
         display="flex"
@@ -47,7 +62,7 @@ const Movies = () => {
     );
   }
 
-  if (error)
+  if (error || dailyTrendingError) {
     return (
       <Box
         height="inherit"
@@ -57,11 +72,14 @@ const Movies = () => {
         justifyContent="center"
       >
         <Typography color="gray">
-          An error occurred while getting movies <MdErrorOutline />
+          {error
+            ? 'An error occurred while getting movies'
+            : 'An error occurred while getting featured movies'}{' '}
+          <MdErrorOutline />
         </Typography>
       </Box>
     );
-
+  }
   if (!data || !data.results || !data.results.length) {
     return (
       <Box
@@ -79,9 +97,15 @@ const Movies = () => {
       </Box>
     );
   }
+  //  i want to pass only movies that are not already in the in the movielist.that is check each movie id in dailyTrending and if it is the same (that is already being displayed in the movielist) then don't add it.
+  const movieListIds = new Set(data?.results.map((movie) => movie.id));
+
+  const filteredDailyTrending = dailyTrending?.results.filter(
+    (movie) => !movieListIds.has( movie.id));
+
   return (
     <>
-    <FeaturedMovie movies={data?.results.slice(0, 6)} />
+      <FeaturedMovie movies={filteredDailyTrending} />
       <MovieList movies={data} noOfMovies={noOfMovies} />{' '}
       <Pagination
         currentPage={page}
