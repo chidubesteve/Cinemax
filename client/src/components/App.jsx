@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
 import { Miscellaneous, NavBar } from '.';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 
@@ -29,6 +30,7 @@ const App = () => {
         </main>
         <Miscellaneous />
         <div ref={alanBtnContainer} />
+        <SpeedInsights />
       </div>
     </>
   );
