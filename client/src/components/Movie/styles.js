@@ -26,6 +26,10 @@ export default makeStyles((theme) => ({
     },
     transition: 'transform ease-in-out 330ms',
   },
+  titleCont: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
   title: {
     color: theme.palette.text.primary,
     textOverflow: 'ellipsis',
@@ -35,11 +39,15 @@ export default makeStyles((theme) => ({
     marginTop: '3px',
     marginBottom: 0,
     textAlign: 'center',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   rating: {
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
- },
+  },
 }));

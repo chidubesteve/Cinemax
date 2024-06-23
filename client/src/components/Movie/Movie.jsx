@@ -23,9 +23,11 @@ const Movie = ({ movie, i }) => {
           />
         </Link>
       </Grow>
-      <Typography variant="h6" className={classes.title}>
-        {movie.title}
-      </Typography>
+      <div className={classes.titleCont}>
+        <Typography variant="h6" className={classes.title}>
+          {movie.title}
+        </Typography>
+      </div>
       <Tooltip
         disableTouchListener
         title={`${(Math.floor(movie.vote_average * 100) / 100).toFixed(
