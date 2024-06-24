@@ -7,7 +7,6 @@ import useStyles, { GlobalCSS } from './styles';
 import '../../utils/libs/swiper-bundle.min.css';
 import './swiper.css';
 const FeaturedMovie = ({ movies }) => {
-  console.log(movies);
 
   const classes = useStyles();
   const theme = useTheme();
