@@ -11,7 +11,7 @@ import {
 } from '../features/currentGenreOrCategory';
 
 const useAlan = () => {
-  const { setMode } = useContext(ThemeContext);
+  const { toggleColorMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,22 +49,22 @@ const useAlan = () => {
           }
         } else if (command === 'changeMode') {
           if (mode === 'dark') {
-            setMode('dark');
+            toggleColorMode('dark');
           } else {
-            setMode('light');
+            toggleColorMode('light');
           }
         } else if (command === 'login') {
           fetchToken();
         } else if (command === 'logout') {
           sessionStorage.clear();
-          navigate(`/`);
+          window.location.href = '/';
         } else if (command === 'search') {
           console.log(query);
           dispatch(searchMovie(query));
         }
       },
     });
-  }, []);
+  }, [dispatch, navigate, toggleColorMode]);
 };
 
 export default useAlan;
