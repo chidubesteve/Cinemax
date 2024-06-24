@@ -34,7 +34,7 @@ const Profile = () => {
   useEffect(() => {
     refetchFavoriteMovies();
     refetchWatchlistMovies();
-  }, []);
+  }, [refetchFavoriteMovies, refetchWatchlistMovies]);
   
   const logout = () => {
     sessionStorage.clear();
