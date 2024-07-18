@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // internal imports
 import useStyles from './styles';
-import logo from '../../assests/images/Cinemax.png';
+import logo from '../../assests/images/Cinemax.webp';
 import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assests/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -47,7 +47,7 @@ const SideBar = ({ setSideBarOpen }) => {
         className={classes.logoLink}
         onClick={() => window.location.reload()}
       >
-        <img className={classes.logo} src={logo} alt="cinemax" />
+        <img className={classes.logo} src={logo} alt="cinemax"/>
       </Link>
       <Divider />
       <List>

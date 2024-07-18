@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
 import { GlobalStyles } from '@mui/material';
-import error_sign from '../../assests/images/error_sign.png'
+import error_sign from '../../assests/images/error_sign.webp'
 
 
 export default makeStyles((theme) => ({
