@@ -7,15 +7,12 @@ import {
   Toolbar,
   Button,
   useMediaQuery,
-  Switch,
-  Box,
 } from '@mui/material';
 import {
   AccountCircle,
   Menu,
   Brightness4,
   Brightness7,
-  HelpOutline,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';

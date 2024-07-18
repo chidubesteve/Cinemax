@@ -5,7 +5,6 @@ import {
   Typography,
   Grid,
   Box,
-  useMediaQuery,
   Tooltip,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';

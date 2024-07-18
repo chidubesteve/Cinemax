@@ -96,7 +96,6 @@ const FeaturedMovie = ({ movies }) => {
                       alt={`${movie?.title} backdrop`}
                       title={movie?.title}
                       className="image"
-                      loading="lazy"
                       fetchpriority="high"
                       
                     />
