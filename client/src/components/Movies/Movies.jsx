@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  CircularProgress,
-  Typography,
   useMediaQuery,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -13,8 +10,8 @@ import {
   useGetDailyTrendingQuery,
 } from '../../services/TMDB';
 import { FeaturedMovie, MovieList, Pagination } from '..';
-import { MdErrorOutline } from 'react-icons/md';
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import FetchingState from '../Errors/FetchingState';
+import FetchError from '../Errors/FetchError';
 
 const Movies = () => {
   const [page, setPage] = useState(1);
@@ -48,59 +45,25 @@ const Movies = () => {
     dailyTrendingIsFetching ||
     dailyTrendingIsLoading
   ) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
-      </Box>
-    );
+    return <FetchingState />;
   }
 
-  if (error || dailyTrendingError) {
-    return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography color="gray">
-          {error
-            ? 'An error occurred while getting movies'
-            : 'An error occurred while getting featured movies'}{' '}
-          <MdErrorOutline />
-        </Typography>
-      </Box>
-    );
-  }
+  error && <FetchError message="An error occurred while getting movies" />;
+  dailyTrendingError && (
+    <FetchError message="An error occurred while getting featured movies" />
+  );
+
   if (!data || !data.results || !data.results.length) {
     return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h6" color="gray">
-          No movies match that search
-          <br />
-          Please try something else.
-        </Typography>
-      </Box>
+      <FetchError message="No movies match that search. Please try something else" />
     );
   }
 
   const movieListIds = new Set(data?.results.map((movie) => movie.id));
 
   const filteredDailyTrending = dailyTrending?.results.filter(
-    (movie) => !movieListIds.has( movie.id));
+    (movie) => !movieListIds.has(movie.id)
+  );
 
   return (
     <>

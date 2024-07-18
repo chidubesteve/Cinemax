@@ -4,15 +4,11 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Box,
-  CircularProgress,
   ListItemIcon,
   ListSubheader,
   ListItemButton,
-  Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { MdErrorOutline } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
 // internal imports
@@ -21,6 +17,8 @@ import logo from '../../assests/images/Cinemax.png';
 import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assests/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { FetchError } from '..';
+import { FetchingState } from '..';
 
 const categories = [
   { label: 'Popular', value: 'popular' },
@@ -74,29 +72,9 @@ const SideBar = ({ setSideBarOpen }) => {
       </List>
       <Divider />
       {error ? (
-        <Box
-          marginBlock="auto"
-          height="100%"
-          display="flex"
-          alignItems="center"
-        >
-          <Typography variant="body1" textAlign="center" color="gray">
-            An error occurred while fetching genres <MdErrorOutline />
-          </Typography>
-        </Box>
+        <FetchError message="An error occurred while getting genres" />
       ) : isFetching || isLoading ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100%"
-        >
-          <CircularProgress
-            size="2rem"
-            style={{ color: '#E3E6E8' }}
-            thickness={2.8}
-          />
-        </Box>
+        <FetchingState />
       ) : (
         <List>
           <ListSubheader>Genres</ListSubheader>

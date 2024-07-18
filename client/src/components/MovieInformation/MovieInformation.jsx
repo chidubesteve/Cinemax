@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
-  CircularProgress,
   Typography,
   Modal,
   Grid,
@@ -23,7 +22,6 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdErrorOutline } from 'react-icons/md';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 // internal imports
@@ -37,6 +35,8 @@ import PageTitle from '../PageTitle.jsx';
 import genreIcons from '../../assests/genres';
 import { MovieList } from '..';
 import { apiUrl } from '../../services/TMDB';
+import {FetchError} from '..';
+import {FetchingState} from '..';
 
 const MovieInformation = () => {
   const [open, setOpen] = React.useState(false);
@@ -150,89 +150,29 @@ const MovieInformation = () => {
   };
 
   if (isFetching || isLoading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
-      </Box>
-    );
+    return <FetchingState />;
   }
 
-  if (error) {
-    console.log(error.message);
-    console.log(error.code);
-    return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography color="gray">
-          An error occurred while getting movie details <MdErrorOutline />
-          <br />
-          {error.message}
-        </Typography>
-      </Box>
-    );
-  }
+  error && (
+    <FetchError message={'An error occurred while getting movie details'} />
+  );
 
   if (!data || !data?.title) {
     return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h6" color="gray">
-          Couldn't get that movie detail. Please try later. <MdErrorOutline />
-        </Typography>
-      </Box>
+      <FetchError
+        message={"Couldn't get that movie detail. Please try later. "}
+      />
     );
   }
 
   // recommendations state handing
   if (isRecommendationsFetching || isRecommendationsLoading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
-      </Box>
-    );
+    return <FetchingState />;
   }
 
-  if (isRecommendationsError) {
-    console.log(isRecommendationsError.message);
-    console.log(isRecommendationsError.code);
-    return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography color="gray">
-          An error while getting recommendations. <MdErrorOutline />
-          <br />
-          {error.message}
-        </Typography>
-      </Box>
-    );
-  }
+  isRecommendationsError && (
+    <FetchError message={'An error occurred while getting recommendations'} />
+  );
 
   const spokenLanguages = data?.spoken_languages
     .map((language) => language.name)
@@ -461,9 +401,7 @@ const MovieInformation = () => {
           {recommendations ? (
             <MovieList movies={recommendations} noOfMovies={12} />
           ) : (
-            <Typography variant="h6" color="gray" align="center">
-              Sorry, no recommendations available. <MdErrorOutline />
-            </Typography>
+            <FetchError message={'No recommendations available'} />
           )}
         </Box>
         <Modal

@@ -12,3 +12,5 @@ export { default as Pagination } from './Pagination/Pagination';
 export { default as RatedCards } from './Ratedcards/RatedCards';
 export { default as Miscellaneous } from './Miscellaneous/Miscellaneous';
 export { default as FeaturedMovie } from './FeaturedMovieCard/FeaturedMovie';
+export { default as FetchingState } from './Errors/FetchingState';
+export { default as FetchError } from './Errors/FetchError';
