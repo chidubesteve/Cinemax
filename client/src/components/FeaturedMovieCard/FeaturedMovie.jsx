@@ -93,9 +93,10 @@ const FeaturedMovie = ({ movies }) => {
                   <div className="cardMedia">
                     <img
                       src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                      alt={movie?.title}
+                      alt={`${movie?.title} backdrop`}
                       title={movie?.title}
                       className="image"
+                      loading="lazy"
                     />
                     <div className="overlay"></div>
 
