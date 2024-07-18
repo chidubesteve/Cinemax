@@ -252,9 +252,10 @@ const MovieInformation = () => {
         >
           <img
             className={classes.poster}
-            src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
+            src={`https://cdn.statically.io/img/image.tmdb.org/t/p/w500/${data?.poster_path}`}
             alt={data?.title}
             loading="lazy"
+            fetchpriority="high"
           />
         </Grid>
         <Grid item container lg={7} direction="column">

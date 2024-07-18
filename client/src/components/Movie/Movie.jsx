@@ -16,10 +16,11 @@ const Movie = ({ movie, i }) => {
             className={classes.image}
             src={
               movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                ? `https://cdn.statically.io/img/image.tmdb.org/t/p/w500/${movie.poster_path}`
                 : cinemax_logo
             }
             loading='lazy'
+            fetchpriority="high"
           />
         </Link>
       </Grow>
