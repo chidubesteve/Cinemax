@@ -252,7 +252,7 @@ const MovieInformation = () => {
         >
           <img
             className={classes.poster}
-            src={`https://cdn.statically.io/img/image.tmdb.org/t/p/w500/${data?.poster_path}`}
+            src={`https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/w500/${data?.poster_path}`}
             alt={data?.title}
             loading="lazy"
             fetchpriority="high"
@@ -338,7 +338,7 @@ const MovieInformation = () => {
                           style={{ textDecoration: 'none' }}
                         >
                           <img
-                            src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
+                            src={`https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/w185/${character.profile_path}`}
                             className={classes.castImage}
                             alt={character.name}
                             loading="lazy"
