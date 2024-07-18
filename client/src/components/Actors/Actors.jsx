@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  CircularProgress,
-  Typography,
-  Grid,
-  Box,
-  Tooltip,
-} from '@mui/material';
+import { Button, Typography, Grid, Box, Tooltip } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { MdErrorOutline, MdFacebook } from 'react-icons/md';
+import { MdFacebook } from 'react-icons/md';
 import { FaInstagram, FaYoutube, FaTiktok, FaImdb } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { TbWorld } from 'react-icons/tb';
@@ -21,7 +14,7 @@ import {
 } from '../../services/TMDB';
 import useStyles from './styles.js';
 import PageTitle from '../PageTitle.jsx';
-import { MovieList, Pagination, ReadMore } from '..';
+import { FetchError, FetchingState, MovieList, Pagination, ReadMore } from '..';
 import { useSelector } from 'react-redux';
 
 const Actors = () => {
@@ -37,7 +30,7 @@ const Actors = () => {
     isFetching: actorsMoviesIsFetching,
     isLoading: actorsMoviesIsLoading,
   } = useGetMoviesByActorsIDQuery({ id, page, includeAdult });
-  console.log(actorsMovies); 
+  console.log(actorsMovies);
 
   const {
     data: actorsData,
@@ -91,89 +84,42 @@ const Actors = () => {
   };
 
   //actors info handling
-  if (isActorsFetching || isActorsLoading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
-      </Box>
-    );
+  if (isActorsLoading || isActorsFetching) {
+    return <FetchingState />;
   }
 
   if (actorsMoviesError) {
     return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography color="gray">
-          {`Sorry, an error occurred while getting movies ${
-            actorsData?.name || 'actor'
-          } is known for`}{' '}
-          <MdErrorOutline />
-        </Typography>
-      </Box>
-    );
-  }
-
-  if (!actorsMovies?.results) {
-    return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h6" color="gray">
-          Couldn't get movies known for.
-          <MdErrorOutline />
-        </Typography>
-      </Box>
+      <FetchError
+        message={`Sorry, an error occurred while getting movies  ${
+          actorsData?.name || 'actor'
+        } is known for`}
+      />
     );
   }
 
   // actors movies state handing
-  if (actorsMoviesIsFetching || actorsMoviesIsLoading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <CircularProgress size={'3.5rem'} style={{ color: '#E3E6E8' }} />
-      </Box>
-    );
+  if (actorsMoviesIsLoading || actorsMoviesIsFetching) {
+    return <FetchingState />;
   }
 
   if (actorsError) {
     return (
-      <Box
-        height="inherit"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography color="gray">
-          {`Sorry, couldn't get ${actorsData?.name || `actors's`} details.`}
-          <MdErrorOutline />
-          <br />
-          <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)}>
-            Go Back
-          </Button>
-        </Typography>
-      </Box>
+      <>
+        <FetchError
+          message={`Sorry, couldn't get ${
+            actorsData?.name || `actors's`
+          } details.`}
+        />
+        <br />
+        <Button
+          startIcon={<ArrowBack />}
+          onClick={() => navigate(-1)}
+          align="center"
+        >
+          Go Back
+        </Button>
+      </>
     );
   }
 
@@ -185,9 +131,9 @@ const Actors = () => {
           {}
           <img
             className={classes.poster}
-            src={`https://cdn.statically.io/img/image.tmdb.org/t/p/w500/${actorsData?.profile_path}`}
+            src={`https://cdn.statically.io/img/image.tmdb.org/t/p/w342/${actorsData?.profile_path}`}
             alt={actorsData?.name}
-            loading='lazy'
+            loading="lazy"
             fetchPriority="high"
           />
           <Grid item className={classes.social_icons} gutterBottom>
