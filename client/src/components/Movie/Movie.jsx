@@ -16,7 +16,7 @@ const Movie = ({ movie, i }) => {
             className={classes.image}
             src={
               movie.poster_path
-                ? `https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/w500/${movie.poster_path}`
+                ? `https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/w342/${movie.poster_path}`
                 : cinemax_logo
             }
             loading='lazy'
