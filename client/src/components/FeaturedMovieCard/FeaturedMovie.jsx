@@ -97,6 +97,8 @@ const FeaturedMovie = ({ movies }) => {
                       title={movie?.title}
                       className="image"
                       loading="lazy"
+                      fetchpriority="high"
+                      
                     />
                     <div className="overlay"></div>
 
