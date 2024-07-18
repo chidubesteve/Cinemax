@@ -92,7 +92,7 @@ const FeaturedMovie = ({ movies }) => {
                 <Link to={`/movies/${movie.id}`} className="link">
                   <div className="cardMedia">
                     <img
-                      src={`https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/original${movie?.backdrop_path}`}
+                      src={`https://cdn.statically.io/img/image.tmdb.org/f=auto/t/p/w780${movie?.backdrop_path}`}
                       alt={`${movie?.title} backdrop`}
                       title={movie?.title}
                       className="image"
