@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
     containerSpaceAround: {
         display: 'flex',
         justifyContent: 'space-around',
-        margin: '10px 0 !important',
+        // margin: '10px 0 !important',
         [theme.breakpoints.down('sm')]: {
           flexDirection: 'column',
           flexWrap: 'wrap',
@@ -17,8 +17,9 @@ export default makeStyles((theme) => ({
           theme.palette.mode === 'dark'
             ? '0.5em 1em 1em rgb(36, 36, 40)'
             : '0.5em 1em 1em rgb(64, 64, 70)',
-        maxWidth: '90%',
-        // height: '28.125rem',
+        width: '90%',
+        display: 'flex',
+        marginInline: 'auto',
         [theme.breakpoints.down('md')]: {
           margin: '0 auto',
           width: '50%',

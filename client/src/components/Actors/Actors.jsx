@@ -284,6 +284,7 @@ const Actors = () => {
                 rel="noopener noreferrer"
                 href={`https://www.imdb.com/name/${actorsData?.imdb_id}`}
                 endIcon={<FaImdb />}
+                name={`visit ${actorsData?.name} imdb's profile`}
               >
                 IMDB
               </Button>{' '}
