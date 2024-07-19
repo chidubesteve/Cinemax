@@ -71,17 +71,15 @@ const NavBar = () => {
                 setSideBarOpen((prevSideBarState) => !prevSideBarState)
               }
               className={classes.MenuButton}
+              aria-label="drawer menu button"
             >
               {' '}
               <Menu />{' '}
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {colorMode.toggleColorMode()}}>
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {colorMode.toggleColorMode()}} aria-label="toggle color mode">
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {/* <Box>
-          Include adult <HelpOutline fontSize='.2rem'/><Switch />
-          </Box> */}
           {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (

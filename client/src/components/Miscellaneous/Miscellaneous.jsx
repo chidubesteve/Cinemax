@@ -153,6 +153,10 @@ const Miscellaneous = () => {
               <Switch
                 aria-label="toggle adult content"
                 checked={checked}
+                inputProps={{
+                  'aria-label': 'toggle adult content',
+                  name: 'adult content switch',
+                }}
                 onChange={handleChange}
                 className={classes.switch}
               />{' '}
