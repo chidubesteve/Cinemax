@@ -11,7 +11,7 @@ const FetchError = ({message}) => {
     alignItems="center"
     justifyContent="center"
   >
-    <Typography color="gray" variant="h5">
+    <Typography color="gray" variant="h6">
       {message} <MdErrorOutline />
       <br />
     </Typography>

@@ -53,7 +53,7 @@ const Movies = () => {
     <FetchError message="An error occurred while getting featured movies" />
   );
 
-  if (!data || !data.results || !data.results.length) {
+  if (!data || !data?.results || !data?.results?.length) {
     return (
       <FetchError message="No movies match that search. Please try something else" />
     );
