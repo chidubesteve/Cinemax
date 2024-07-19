@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback, useMemo } from 'react';
 import {
   AppBar,
   Avatar,
@@ -33,19 +33,19 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const colorMode = useContext(ThemeContext);
 
-  const token = sessionStorage.getItem('request_token');
-  const sessionIdFromSessionStorage = sessionStorage.getItem('session_id');
+  const token = useMemo(() => sessionStorage.getItem('request_token'), []);
+  const sessionIdFromSessionStorage = useMemo(
+    () => sessionStorage.getItem('session_id'),
+    []
+  );
 
   useEffect(() => {
     const logUserIn = async () => {
-      let accountData;
       if (token) {
-        if (sessionIdFromSessionStorage) {
-          accountData = await getAccount(sessionIdFromSessionStorage);
-        } else {
-          const sessionId = await createSessionId();
-          accountData = await getAccount(sessionId);
-        }
+        let accountData;
+        const sessionId =
+          sessionIdFromSessionStorage || (await createSessionId());
+        accountData = await getAccount(sessionId);
         if (accountData) {
           dispatch(setUser(accountData));
         }
@@ -58,18 +58,28 @@ const NavBar = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
 
+  const toggleSideBar = useCallback(() => {
+    setSideBarOpen((prevSideBarOpen) => !prevSideBarOpen);
+  }, []);
+
+  const handleLoginClick = useCallback(() => {
+    fetchToken();
+  }, []);
+
+  const handleColorModeToggle = useCallback(() => {
+    colorMode.toggleColorMode();
+  }, [colorMode]);
+
   return (
     <>
-      <AppBar position="fixed" color='default'>
+      <AppBar position="fixed" color="default">
         <Toolbar className={classes.toolbar}>
           {isMobile && (
             <IconButton
               color="inherit"
               edge="start"
               style={{ outline: 'none' }}
-              onClick={() =>
-                setSideBarOpen((prevSideBarState) => !prevSideBarState)
-              }
+              onClick={toggleSideBar}
               className={classes.MenuButton}
               aria-label="drawer menu button"
             >
@@ -77,18 +87,18 @@ const NavBar = () => {
               <Menu />{' '}
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {colorMode.toggleColorMode()}} aria-label="toggle color mode">
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={handleColorModeToggle}
+            aria-label="toggle color mode"
+          >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
-              <Button
-                color="inherit"
-                onClick={() => {
-                  fetchToken();
-                }}
-              >
+              <Button color="inherit" onClick={handleLoginClick}>
                 Login &nbsp; <AccountCircle />
               </Button>
             ) : (
@@ -122,9 +132,7 @@ const NavBar = () => {
               variant="temporary"
               anchor="right"
               open={sideBarOpen}
-              onClose={() =>
-                setSideBarOpen((prevSideBarState) => !prevSideBarState)
-              }
+              onClose={toggleSideBar}
               classes={{ paper: classes.sidebarPaper }}
               ModalProps={{
                 keepMounted: true,
