@@ -45,7 +45,6 @@ const SideBar = ({ setSideBarOpen }) => {
       <Link
         to={'/'}
         className={classes.logoLink}
-        onClick={() => window.location.reload()}
       >
         <img className={classes.logo} src={logo} alt="cinemax"/>
       </Link>
