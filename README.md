@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/chidubesteve/Cinemax">
-    <img src="client/src/assests/images/Cinemax.png" alt="Logo" width="80" height="80">
+    <img src="client/src/assests/images/Cinemax.webp" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Cinemax</h3>
