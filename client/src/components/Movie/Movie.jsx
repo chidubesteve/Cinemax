@@ -30,7 +30,7 @@ const Movie = ({ movie, i }) => {
         </Typography>
       </div>
       <Tooltip
-        disableTouchListener
+        enterTouchDelay={0}
         title={`${(Math.floor(movie.vote_average * 100) / 100).toFixed(
           1
         )} / 10`}
