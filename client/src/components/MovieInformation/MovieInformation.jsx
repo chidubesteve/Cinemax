@@ -384,7 +384,7 @@ const MovieInformation = () => {
                   </Button>
                 </ButtonGroup>
               </Grid>
-              <Button variant="contained" style={{ marginTop: '20px', backgroundColor: '#56ff00', color: 'white', fontWeight: 'bold', width: '100%' }} startIcon={<PlayArrow />} size='large'>
+              <Button variant="contained" style={{ marginTop: '20px', backgroundColor: '#56ff00', color: 'white', fontWeight: 'bold', width: '100%'}} startIcon={<PlayArrow />} size='large'>
               Watch Now
               </Button>
             </div>

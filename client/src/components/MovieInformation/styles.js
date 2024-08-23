@@ -127,8 +127,10 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-around',
     width: '100%',
     alignItems: 'center',
+    flexWrap: 'wrap',
     [theme.breakpoints.down('customBreakpoint4')]: {
       flexDirection: 'column !important',
+      flexWrap: 'nowrap !important',
     },
   },
   modal: {
