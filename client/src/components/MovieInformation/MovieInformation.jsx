@@ -18,6 +18,7 @@ import {
   Favorite,
   BookmarkBorder,
   ArrowBack,
+  PlayArrow
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -307,7 +308,7 @@ const MovieInformation = () => {
                   variant="outlined"
                   style={{ marginBottom: '10px' }}
                   size={isXLarge ? 'large' : 'small'}
-                  orientation={isMedium ? 'vertical' : 'horizontal'}
+                  orientation={'horizontal'}
                 >
                   <Button
                     target="_blank"
@@ -339,7 +340,7 @@ const MovieInformation = () => {
                   variant="outlined"
                   size={isXLarge ? 'large' : 'small'}
                   style={{ marginBottom: '10px' }}
-                  orientation={isMedium ? 'vertical' : 'horizontal'}
+                  orientation={ 'horizontal'}
                 >
                   <Button
                     onClick={addToFavorites}
@@ -347,7 +348,7 @@ const MovieInformation = () => {
                       isMovieFavorited ? <Favorite /> : <FavoriteBorder />
                     }
                   >
-                    {isMovieFavorited ? 'Favorited' : 'Favorite'}
+                    {isMovieFavorited ? 'Liked' : 'Like'}
                   </Button>
                   <Button
                     onClick={addToWatchList}
@@ -383,6 +384,9 @@ const MovieInformation = () => {
                   </Button>
                 </ButtonGroup>
               </Grid>
+              <Button variant="contained" style={{ marginTop: '20px', backgroundColor: '#56ff00', color: 'white', fontWeight: 'bold', width: '100%' }} startIcon={<PlayArrow />} size='large'>
+              Watch Now
+              </Button>
             </div>
           </Grid>
         </Grid>

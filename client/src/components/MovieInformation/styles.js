@@ -76,7 +76,6 @@ export default makeStyles((theme) => ({
     alignItems: 'baseline',
     flexWrap: 'nowrap !important',
     gap: '16px',
-    // width: '40rem !important',
     msOverflowStyle: 'none' /* Edge, Internet Explorer */,
     scrollbarWidth: 'none' /* Firefox */,
     // hides scrollbars while allowing to scroll
