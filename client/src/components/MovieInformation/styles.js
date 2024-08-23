@@ -19,17 +19,18 @@ export default makeStyles((theme) => ({
         : '0.5em 1em 1em rgb(64, 64, 70)',
     width: '90%',
     alignSelf: 'start',
+    marginBottom: '30px',
     [theme.breakpoints.down('md')]: {
-      margin: '0 auto',
+      margin: '0',
       marginBottom: '35px',
-      width: '50%',
+      width: '85vw',
       display: 'flex',
       height: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
-      margin: '0 auto',
-      width: '100%',
-      height: '350px',
+      margin: '0',
+      width: '85vw',
+      height: 'auto',
       marginBottom: '30px',
     },
     // [theme.breakpoints.down('customBreakpoint4')]: {
@@ -84,6 +85,10 @@ export default makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xl')]: {
       maxWidth: '40rem !important',
+    },
+
+    [theme.breakpoints.down('lg')]: {
+      maxWidth: '51.5rem !important',
     },
 
     [theme.breakpoints.down('customBreakpoint4')]: {

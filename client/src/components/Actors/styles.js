@@ -20,10 +20,16 @@ export default makeStyles((theme) => ({
         width: '90%',
         display: 'flex',
         marginInline: 'auto',
+        marginBottom: '2.5rem',
+        [theme.breakpoints.down('lg')]: {
+          width: 'auto',
+          marginInline: 'auto',
+          height: '700px',
+
+        },
         [theme.breakpoints.down('md')]: {
-          margin: '0 auto',
-          width: '50%',
-          height: '350px',
+          width: '100%',
+          height: 'auto',
         },
         [theme.breakpoints.down('sm')]: {
           margin: '0 auto',
